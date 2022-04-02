@@ -1,0 +1,143 @@
+﻿@model UserModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIS | Giriş Sayfası</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/css/Login/login.css">
+    <link rel="shortcut icon" href="#">
+
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h1 class="noselect">Öğrenci Bilgi Sistemi</h1>
+        </div>
+    </header>
+
+    <main>
+        <form method="post" asp-controller="Home" asp-action="Index" name="registration">
+
+            <div class="containerLogin">
+
+                <div class="userType">
+
+                    <input type="radio" class="btn-check" name="UserType" value="student" id="studentRadioBtn" autocomplete="off"
+                           checked>
+
+                    <label class="btn btn-outline-warning" for="studentRadioBtn" id="studentRadio">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>Öğrenci Girişi</span>
+                    </label>
+
+                    <input type="radio" class="btn-check" name="UserType" value="academician" id="academicianRadioBtn" autocomplete="off">
+
+                    <label class="btn btn-outline-danger" for="academicianRadioBtn" id="academicianRadio">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Akademisyen Girişi</span>
+                    </label>
+
+                </div>
+
+                <hr>
+                <div id="loginForm" class="col-12">
+
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control col-9" name="UserName" id="input-mail" onkeypress="isInputNumber(event)" placeholder="E-Posta Adresi" autocomplete="on">
+                        <span class="input-group-text noselect col-4">@('@')firat.edu.tr</span>
+                    </div>
+
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <div class="input-group mb-3">
+                        <input type="password" name="Password" class="form-control" id="input-pass" placeholder="Şifre">
+                    </div>
+
+                    <div class="d-grid col-12">
+                        <button class="btn btn-outline-warning" id="submit-btn" type="submit">Giriş Yap</button>
+                    </div>
+                    <div class="noselect text-warning mt-2" asp-validation-summary="ModelOnly">
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <!-- JQuery CDN -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- Javascript -->
+    <script src="~/js/Login/login.js"></script>
+
+</body>
+
+</html>
+
+<script>
+    $(function () {
+        $("form[name='registration']").validate({
+            lang: 'tr',
+            rules: {
+                UserName: {
+                    required: true,
+                    minlength: 7
+                },
+                Password: {
+                    required: true,
+                    minlength: 5
+                }
+            },
+            messages: {
+
+                UserName: {
+                    required: "Lütfen Kullanıcı adını giriniz",
+                    minlength: "Kullanıcı adı minimum 7 karakterden oluşmalı"
+                },
+                Password: {
+                    required: "Lütfen şifrenizi giriniz",
+                    minlength: "Şifreniz en az 5 karakterden oluşmalı"
+                }
+            },
+            errorPlacement: function (error, element) {
+
+                var placement = $(element).data('error');
+
+                if (placement) {
+                    $(placement).append(error)
+                }
+                else {
+                    error.insertAfter("#submit-btn");
+                }
+            },
+            errorElement: 'div',
+            errorClass: 'error noselect',
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    });
+</script>
