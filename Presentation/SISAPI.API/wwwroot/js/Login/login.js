@@ -13,11 +13,9 @@ function isInputNumber(event) {
             event.preventDefault();
         }
     } else {
-
-        if (!/[a-z]/.test(character) && !/[0-9]/.test(character)) {
+        if (!/^[a-zA-Z0-9-ýðüþöç-ÝÐÜÞÖÇ]*$/.test(character)) {
             event.preventDefault();
         }
-
         inputMail.maxLength = "20";
     }
 }
@@ -41,21 +39,11 @@ $("#academicianRadioBtn").on("click", function (event) {
 });
 
 inputMail.addEventListener("focusin", () => {
-
-    if ($("#studentRadioBtn").prop('checked') == true) {
-        inputMail.style.boxShadow = "0px 0px 0px 3px #ffc107";
-    } else {
-        inputMail.style.boxShadow = "0px 0px 0px 3px #dc3545";
-    }
+    fillBoxShodow(inputMail)
 });
 
 inputPassword.addEventListener("focusin", () => {
-
-    if ($("#studentRadioBtn").prop('checked') == true) {
-        inputPassword.style.boxShadow = "0px 0px 0px 3px #ffc107";
-    } else {
-        inputPassword.style.boxShadow = "0px 0px 0px 3px #dc3545";
-    }
+    fillBoxShodow(inputPassword)
 });
 
 inputMail.addEventListener("focusout", () => {
@@ -66,19 +54,55 @@ inputPassword.addEventListener("focusout", () => {
     inputPassword.style.boxShadow = "none";
 });
 
-function reportWindowSize() {
-
-    if (window.innerWidth < 570) {
-        $("#loginForm").width($(".userType").width());
-        $("#submit-btn").width($("#studentRadio").width());
-
-        
-    } 
-    else {
-        $("#loginForm").css('width', '450px');
-        $("#submit-btn").css('width', '386px');
+function fillBoxShodow(element) {
+    if ($("#studentRadioBtn").prop('checked') == true) {
+        element.style.boxShadow = "0px 0px 0px 3px #ffc107";
+    } else if ($("#academicianRadioBtn").prop('checked') == true) {
+        element.style.boxShadow = "0px 0px 0px 3px #dc3545";
+    } else {
+        element.style.boxShadow = "0px 0px 0px 3px #6610f2";
     }
-
 }
-reportWindowSize()
-window.onresize = reportWindowSize;
+
+
+$(function () {
+    $("form[name='registration']").validate({
+        lang: 'tr',
+        rules: {
+            UserName: {
+                required: true,
+                minlength: 7
+            },
+            Password: {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+
+            UserName: {
+                required: "Lütfen kullanýcý adýný giriniz.",
+                minlength: "Kullanýcý adý minimum 7 karakterden oluþmalý."
+            },
+            Password: {
+                required: "Lütfen þifrenizi giriniz.",
+                minlength: "Þifreniz en az 5 karakterden oluþmalý."
+            }
+        },
+        errorPlacement: function (error, element) {
+
+            if (element.attr("name") == "UserName")
+                error.insertAfter("#submit-btn");
+
+            else if (element.attr("name") == "Password")
+                error.insertBefore("#lower-hr");
+
+        },
+        errorElement: 'div',
+        errorClass: 'error',
+        submitHandler: function (form) {
+            form.submit();
+        }
+
+    });
+});

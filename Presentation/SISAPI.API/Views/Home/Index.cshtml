@@ -78,6 +78,7 @@
 
                     </div>
                 </div>
+                <hr id="lower-hr">
             </div>
         </form>
     </main>
@@ -85,7 +86,7 @@
     <!-- JQuery CDN -->
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>*@
 
     <!-- Bootstrap JS CDN -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -96,48 +97,3 @@
 </body>
 
 </html>
-
-<script>
-    $(function () {
-        $("form[name='registration']").validate({
-            lang: 'tr',
-            rules: {
-                UserName: {
-                    required: true,
-                    minlength: 7
-                },
-                Password: {
-                    required: true,
-                    minlength: 5
-                }
-            },
-            messages: {
-
-                UserName: {
-                    required: "Lütfen Kullanıcı adını giriniz",
-                    minlength: "Kullanıcı adı minimum 7 karakterden oluşmalı"
-                },
-                Password: {
-                    required: "Lütfen şifrenizi giriniz",
-                    minlength: "Şifreniz en az 5 karakterden oluşmalı"
-                }
-            },
-            errorPlacement: function (error, element) {
-
-                var placement = $(element).data('error');
-
-                if (placement) {
-                    $(placement).append(error)
-                }
-                else {
-                    error.insertAfter("#submit-btn");
-                }
-            },
-            errorElement: 'div',
-            errorClass: 'error noselect',
-            submitHandler: function (form) {
-                form.submit();
-            }
-        });
-    });
-</script>

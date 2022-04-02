@@ -18,7 +18,7 @@ body {
 }
 
 
-header>div {
+header > div {
     width: 100%;
     border-bottom: 5px solid #fff;
     transform: skewY(-3.5deg);
@@ -26,17 +26,16 @@ header>div {
     top: 0;
 }
 
-header>div>h1 {
-    padding: 10px;
-    color: #fff;
-    text-align: left;
-    font-family: 'Chakra Petch', sans-serif;
-    position: relative;
-    transform: skewY(3.5deg);
-    top: 20px;
-    left: 20px;
-}
-
+    header > div > h1 {
+        padding: 10px;
+        color: #fff;
+        text-align: left;
+        font-family: 'Chakra Petch', sans-serif;
+        position: relative;
+        transform: skewY(3.5deg);
+        top: 20px;
+        left: 20px;
+    }
 
 .containerLogin {
     margin: 25vh auto 0px auto;
@@ -47,13 +46,14 @@ header>div>h1 {
     align-items: center;
     border-radius: 20px;
     background-color: rgb(33, 37, 41);
+    font-family: 'Chakra Petch', sans-serif;
 }
 
 input {
     outline: none;
 }
 
-.containerLogin>hr {
+.containerLogin > hr {
     border: 1px solid #0dcaf0;
     opacity: 1;
     border-radius: 10px;
@@ -79,7 +79,6 @@ input {
     align-items: center;
     justify-content: center;
     border-radius: 20px;
-    padding: 1rem 2rem 2rem 2rem;
     width: 450px;
 }
 
@@ -90,19 +89,21 @@ input {
     outline: none;
 }
 
-#submit-btn{
-    margin-bottom : 0px;
-}
-
 #input-pass-error, #input-mail-error {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     color: yellow;
-    margin: 3px;
+    margin-top: 5px;
     text-align: center;
 }
 
 @media only screen and (max-width: 800px) {
 
-    header>div>h1 {
+    header > div > h1 {
         top: 10px;
         left: 10px;
     }
@@ -112,6 +113,7 @@ input {
 
     .containerLogin {
         width: 90%;
+        font-size: 0.8rem;
     }
 
     .userType {
@@ -122,37 +124,46 @@ input {
     #studentRadio,
     #academicianRadio {
         margin: 5px;
-        width: 100%;
-    }
-
-    #loginForm {
-        min-width: 100%;
-        width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    .input-group{
-        min-width: 100%;
-    }
-
-    #loginForm  input,
-    #loginForm  span{
+        width: 90%;
         font-size: 0.8rem;
     }
 
-    #loginForm > .d-grid{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
+    #loginForm {
+        width: 90%;
+        padding: 0;
+        padding-top: 5px;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    #loginForm input,
+    #loginForm span,
+    #submit-btn {
+        font-size: 0.8rem;
     }
 }
 
 @media only screen and (max-width: 375px) {
-    
-    header>div>h1 {
+
+    header > div > h1 {
         top: 5px;
         left: 5px;
+    }
+
+    .containerLogin {
+        width: 95%;
+    }
+
+    #studentRadio,
+    #academicianRadio {
+        width: 98%;
+    }
+
+    #loginForm {
+        width: 98%;
     }
 }
