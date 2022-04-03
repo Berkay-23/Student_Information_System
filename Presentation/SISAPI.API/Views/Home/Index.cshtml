@@ -1,99 +1,61 @@
 ﻿@model UserModel
 
 @{
-    Layout = null;
+    Layout = "_LoginLayout";
 }
 
-<!DOCTYPE html>
-<html lang="en">
+<form method="post" asp-controller="Home" asp-action="Index" name="registration">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIS | Giriş Sayfası</title>
+    <div class="containerLogin">
 
-    <!-- Bootstrap CDN -->
-    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <div class="userType">
 
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css">
+            <input type="radio" class="btn-check" name="UserType" value="student" id="studentRadioBtn" autocomplete="off"
+                   checked>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="~/css/Login/login.css">
-    <link rel="shortcut icon" href="#">
+            <label class="btn btn-outline-warning" for="studentRadioBtn" id="studentRadio">
+                <i class="fas fa-user-graduate"></i>
+                <span>Öğrenci Girişi</span>
+            </label>
 
-</head>
+            <input type="radio" class="btn-check" name="UserType" value="academician" id="academicianRadioBtn" autocomplete="off">
 
-<body>
+            <label class="btn btn-outline-danger" for="academicianRadioBtn" id="academicianRadio">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Akademisyen Girişi</span>
+            </label>
 
-    <header>
-        <div>
-            <h1 class="noselect">Öğrenci Bilgi Sistemi</h1>
         </div>
-    </header>
 
-    <main>
-        <form method="post" asp-controller="Home" asp-action="Index" name="registration">
+        <hr>
+        <div id="loginForm" class="col-12">
 
-            <div class="containerLogin">
-
-                <div class="userType">
-
-                    <input type="radio" class="btn-check" name="UserType" value="student" id="studentRadioBtn" autocomplete="off"
-                           checked>
-
-                    <label class="btn btn-outline-warning" for="studentRadioBtn" id="studentRadio">
-                        <i class="fas fa-user-graduate"></i>
-                        <span>Öğrenci Girişi</span>
-                    </label>
-
-                    <input type="radio" class="btn-check" name="UserType" value="academician" id="academicianRadioBtn" autocomplete="off">
-
-                    <label class="btn btn-outline-danger" for="academicianRadioBtn" id="academicianRadio">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                        <span>Akademisyen Girişi</span>
-                    </label>
-
-                </div>
-
-                <hr>
-                <div id="loginForm" class="col-12">
-
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control col-9" name="UserName" id="input-mail" onkeypress="isInputNumber(event)" placeholder="E-Posta Adresi" autocomplete="on">
-                        <span class="input-group-text noselect col-4">@('@')firat.edu.tr</span>
-                    </div>
-
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                    <div class="input-group mb-3">
-                        <input type="password" name="Password" class="form-control" id="input-pass" placeholder="Şifre">
-                    </div>
-
-                    <div class="d-grid col-12">
-                        <button class="btn btn-outline-warning" id="submit-btn" type="submit">Giriş Yap</button>
-                    </div>
-                    <div class="noselect text-warning mt-2" asp-validation-summary="ModelOnly">
-
-                    </div>
-                </div>
-                <hr id="lower-hr">
+            <span asp-validation-for="UserName" class="text-danger"></span>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control col-9" name="UserName" id="input-mail" onkeypress="isInputNumber(event)" placeholder="E-Posta Adresi" autocomplete="on">
+                <span class="input-group-text noselect col-4">@('@')firat.edu.tr</span>
             </div>
-        </form>
-    </main>
 
-    <!-- JQuery CDN -->
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>*@
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="input-group mb-3">
+                <input type="password" name="Password" class="form-control" id="input-pass" placeholder="Şifre">
+            </div>
 
-    <!-- Bootstrap JS CDN -->
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <div class="d-grid col-12">
+                <button class="btn btn-outline-warning" id="submit-btn" type="submit">Giriş Yap</button>
+            </div>
+            <div class="noselect text-warning mt-2" asp-validation-summary="ModelOnly">
 
-    <!-- Javascript -->
-    <script src="~/js/Login/login.js"></script>
+            </div>
+        </div>
+        <hr id="lower-hr">
+    </div>
+</form>
 
-</body>
-
-</html>
+<script>
+    const userRequired = "Lütfen kullanıcı adını giriniz.";
+    const userMinLength = "Kullanıcı adı minimum 7 karakterden oluşmalı.";
+    const passwordRequired = "Lütfen şifrenizi giriniz.";
+    const passwordMinLength = "Şifreniz en az 5 karakterden oluşmalı.";
+    const turkishCharset = "ığüşöç-İĞÜŞÖÇ";
+</script>

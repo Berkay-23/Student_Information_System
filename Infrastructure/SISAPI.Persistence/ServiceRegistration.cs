@@ -38,6 +38,7 @@ namespace SISAPI.Persistence
                 option.Cookie.HttpOnly = true;
             });
 
+
             services.AddScoped<IStudentRepository, StudentRepository>();
             services.AddScoped<IAcademicRepository, AcademicRepository>();
         }

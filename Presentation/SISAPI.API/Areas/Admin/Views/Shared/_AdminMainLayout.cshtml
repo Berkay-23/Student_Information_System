@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIS | Giriş Sayfası</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="~/lib/fontawesome/css/all.css">
+
+    <!-- CSS -->
+    <link rel="shortcut icon" href="#">
+    <link href="~/css/AdminNav/admin_nav.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <nav class="noselect">
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+
+        <div class="profile">
+            <div class="dropdown" style="float:right;">
+                <button class="dropbtn"><i class="fa-solid fa-user"></i></button>
+                <div class="dropdown-content">
+                    <a asp-area="Admin" asp-action="Profile">Profili Düzenle</a>
+                    <a asp-area="Admin" asp-action="Logout">Çıkış Yap</a>
+                </div>
+            </div>
+        </div>
+
+        <label class="logo"><a asp-area="Admin" asp-action="Index">SIS | ADMIN</a></label>
+        <ul>
+            <li><a asp-area="Admin" asp-action="Index"> Ana Sayfa</a></li>
+            <li><a asp-area="Admin" asp-action="Students">Öğrenciler</a></li>
+            <li><a asp-area="Admin" asp-action="Academics">Akademisyenler</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- JQuery CDN -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+    <!-- Bootstrap JS CDN -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <!-- Javascript -->
+    <script src="~/js/AdminNav/admin_nav.js"></script>
+
+</body>
+
+</html>
+

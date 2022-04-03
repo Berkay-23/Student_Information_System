@@ -1,0 +1,43 @@
+﻿@model AdminModel
+
+@{
+    Layout = "_LoginLayout";
+}
+
+<form method="post" asp-area="Admin" asp-controller="Home" asp-action="Index" name="registration">
+    <div class="containerLogin">
+        <div>
+            <h3 class="text-white noselect">Giriş Yap</h3>
+        </div>
+        <hr>
+        <div id="loginForm" class="col-12">
+
+            <span asp-validation-for="UserName" class="text-danger"></span>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control col-9" name="UserName" id="input-mail"
+                       onkeypress="isInputNumber(event)" placeholder="Kullanıcı Adı" autocomplete="off">
+            </div>
+
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <div class="input-group mb-3">
+                <input type="password" name="Password" class="form-control" id="input-pass" placeholder="Şifre">
+            </div>
+
+            <div class="d-grid col-12">
+                <button class="btn btn-purple" id="submit-btn" type="submit">Giriş Yap</button>
+            </div>
+            <div class="noselect text-warning mt-2" asp-validation-summary="ModelOnly">
+
+            </div>
+        </div>
+        <hr id="lower-hr">
+    </div>
+</form>
+
+<script>
+    const userRequired = "Lütfen kullanıcı adını giriniz.";
+    const userMinLength = "Kullanıcı adı minimum 7 karakterden oluşmalı.";
+    const passwordRequired = "Lütfen şifrenizi giriniz.";
+    const passwordMinLength = "Şifreniz en az 5 karakterden oluşmalı.";
+    const turkishCharset = "ığüşöç-İĞÜŞÖÇ";
+</script>

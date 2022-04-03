@@ -1,20 +1,10 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using SISAPI.API.Models;
-using SISAPI.Application.Repositories;
-using SISAPI.Business;
+using Microsoft.AspNetCore.Mvc;
 using SISAPI.Domain.Entities;
-using SISAPI.Domain.Entities.Common;
-using SISAPI.Persistence;
-using SISAPI.Persistence.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using SISAPI.API.Models;
+using System.Diagnostics;
 
 namespace SISAPI.API.Controllers
 {

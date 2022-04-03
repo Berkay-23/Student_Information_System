@@ -13,7 +13,7 @@ function isInputNumber(event) {
             event.preventDefault();
         }
     } else {
-        if (!/^[a-zA-Z0-9-ýðüþöç-ÝÐÜÞÖÇ]*$/.test(character)) {
+        if (!/^[a-zA-Z0-9]*$/.test(character) && !turkishCharset.includes(character)) {
             event.preventDefault();
         }
         inputMail.maxLength = "20";
@@ -64,10 +64,8 @@ function fillBoxShodow(element) {
     }
 }
 
-
 $(function () {
     $("form[name='registration']").validate({
-        lang: 'tr',
         rules: {
             UserName: {
                 required: true,
@@ -81,12 +79,12 @@ $(function () {
         messages: {
 
             UserName: {
-                required: "Lütfen kullanýcý adýný giriniz.",
-                minlength: "Kullanýcý adý minimum 7 karakterden oluþmalý."
+                required: userRequired,
+                minlength: userMinLength
             },
             Password: {
-                required: "Lütfen þifrenizi giriniz.",
-                minlength: "Þifreniz en az 5 karakterden oluþmalý."
+                required: passwordRequired,
+                minlength: passwordMinLength
             }
         },
         errorPlacement: function (error, element) {
