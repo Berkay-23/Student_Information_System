@@ -1,0 +1,22 @@
+﻿.width-150 {
+    width: 150px;
+}
+
+.text-c {
+    text-align: center;
+}
+
+th > a,
+td > a {
+    text-decoration: none;
+}
+
+.lh-50 {
+    line-height: 50px;
+}
+
+th > a:hover,
+td > a:hover {
+    color: #ff7b25;
+    font-weight: 700;
+}

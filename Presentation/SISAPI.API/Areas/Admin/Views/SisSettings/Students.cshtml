@@ -1,7 +1,51 @@
-﻿@{
+﻿@model IEnumerable<Student>
+
+@{
     Layout = "_AdminMainLayout";
 }
 
+
+<div class="container mt-5">
+    <table class="table table-light table-hover">
+        <thead class="table-dark noselect">
+            <tr class="lh-50">
+                <th class="text-c" scope="col">Öğrenci No</th>
+                <th scope="col">Ad</th>
+                <th scope="col">Soyad</th>
+                <th scope="col">Fakülte</th>
+                <th scope="col">Bölüm</th>
+                <th class="width-150 text-c" scope="col">Sınıf</th>
+                <th class="width-150 text-c" scope="col">Danışman Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Student student in Model)
+            {
+                <tr id="#@student.StudentNo">
+
+                    <th class="text-c" scope="row">
+                        <a asp-action="StudentDetail" asp-route-id="@student.StudentNo">
+                            @student.StudentNo
+                        </a>
+                    </th>
+
+                    <td>@student.Name</td>
+                    <td>@student.Surname</td>
+                    <td>@student.Faculty.Substring(0, student.Faculty.IndexOf("Fak") - 1)</td>
+                    <td>@student.Department.Substring(0, student.Faculty.IndexOf(" ") - 1)</td>
+                    <td class="text-c">@student.GradeLevel</td>
+
+                    <td class="text-c">
+                        <a class="text-decoration-none" asp-action="AcademicianDetail" asp-route-id="@student.AdvisorId">
+                            @student.AdvisorId
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <script>
-        let active_index = 2;
+    let active_index = 2;
 </script>

@@ -1,0 +1,104 @@
+table.note-details {
+    text-align: center;
+}
+
+table.note-details input {
+    max-width: 100px;
+    text-align: center;
+    margin: auto;
+}
+
+table.note-details td,
+th {
+
+    max-width: 150px;
+}
+
+#studentInfos {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 3px solid #000;
+    border-radius: 10px;
+}
+
+#studentInfos form {
+    width: 100%;
+}
+
+#note-table-area {
+    width: 75%;
+}
+
+@media only screen and (max-width: 900px) {
+    
+    .container-fluid {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #studentInfos {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    #studentInfos form {
+        width: 50%;
+    }
+
+    #note-table-area {
+        width: 100%;
+
+    }
+}
+
+@media only screen and (max-width: 654px) {
+
+    #studentInfos form {
+        width: 75%;
+    }
+
+    div.vertical {
+        position: relative;
+        height: 110px;
+        width: 45px;
+        margin: auto auto auto 0;
+        
+        writing-mode: sideways-lr;
+        filter: flipv fliph;
+    }
+
+    th.vertical {
+        padding-bottom: 10px;
+        vertical-align: middle;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+
+    #studentInfos form {
+        width: 90%;
+    }
+
+    table.note-details tbody,
+    table.note-details input {
+        font-size: small;
+    }
+
+    table.note-details th,
+    table.note-details td {
+        padding: 2px;
+    }
+
+    table.note-details {
+        overflow: hidden;
+    }
+
+    #note-table-area form {
+        width: 100%;
+    }
+}

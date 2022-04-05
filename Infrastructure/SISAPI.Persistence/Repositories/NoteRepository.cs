@@ -12,20 +12,20 @@ using System.Threading.Tasks;
 
 namespace SISAPI.Persistence.Repositories
 {
-    public class AcademicRepository : IAcademicRepository
+    public class NoteRepository : INoteRepository
     {
         private readonly SISContext _context;
 
-        public AcademicRepository(SISContext context)
+        public NoteRepository(SISContext context)
         {
             _context = context;
         }
 
-        public DbSet<Academic> Table
-             => _context.Set<Academic>();
+        public DbSet<Note> Table
+             => _context.Set<Note>();
 
 
-        public IQueryable<Academic> GetAll(bool tracking = true)
+        public IQueryable<Note> GetAll(bool tracking = true)
         {
             var query = Table.AsQueryable();
 
@@ -35,17 +35,17 @@ namespace SISAPI.Persistence.Repositories
             return query;
         }
 
-        public async Task<Academic> GetByIdAsync(short id, bool tracking = true)
+        public async Task<Note> GetByIdAsync(string id, bool tracking = true)
         {
             var query = Table.AsQueryable();
 
             if (!tracking)
                 query = query.AsNoTracking();
 
-            return await query.FirstOrDefaultAsync(entity => entity.AcademicianId == id);
+            return await query.FirstOrDefaultAsync(entity => entity.LessonId == Int32.Parse(id));
         }
 
-        public async Task<Academic> GetSingleAsync(Expression<Func<Academic, bool>> method, bool tracking = true)
+        public async Task<Note> GetSingleAsync(Expression<Func<Note, bool>> method, bool tracking = true)
         {
             var query = Table.AsQueryable();
 
@@ -55,7 +55,7 @@ namespace SISAPI.Persistence.Repositories
             return await query.FirstOrDefaultAsync(method);
         }
 
-        public IQueryable<Academic> GetWhere(Expression<Func<Academic, bool>> method, bool tracking = true)
+        public IQueryable<Note> GetWhere(Expression<Func<Note, bool>> method, bool tracking = true)
         {
             var query = Table.Where(method);
 
@@ -65,37 +65,37 @@ namespace SISAPI.Persistence.Repositories
             return query;
         }
 
-        public async Task<bool> AddAsync(Academic entity)
+        public async Task<bool> AddAsync(Note entity)
         {
-            EntityEntry<Academic> entityEntry = await Table.AddAsync(entity);
+            EntityEntry<Note> entityEntry = await Table.AddAsync(entity);
             return entityEntry.State == EntityState.Added;
         }
 
-        public async Task<bool> AddRangeAsync(List<Academic> entities)
+        public async Task<bool> AddRangeAsync(List<Note> entities)
         {
             await Table.AddRangeAsync(entities);
             return true;
         }
 
-        public bool Remove(Academic entity)
+        public bool Remove(Note entity)
         {
             EntityEntry entityEntry = Table.Remove(entity);
             return entityEntry.State == EntityState.Deleted;
         }
 
-        public async Task<bool> RemoveAsync(short id)
+        public async Task<bool> RemoveAsync(string id)
         {
-            Academic entity = await Table.FirstOrDefaultAsync(entity => entity.AcademicianId == id);
+            Note entity = await Table.FirstOrDefaultAsync(entity => entity.LessonId == Int32.Parse(id));
             return Remove(entity);
         }
 
-        public bool RemoveRange(List<Academic> entities)
+        public bool RemoveRange(List<Note> entities)
         {
             Table.RemoveRange(entities);
             return true;
         }
 
-        public bool Update(Academic entity)
+        public bool Update(Note entity)
         {
             EntityEntry entityEntry = Table.Update(entity);
             return entityEntry.State == EntityState.Modified;
@@ -103,5 +103,6 @@ namespace SISAPI.Persistence.Repositories
 
         public async Task<int> SaveAsync()
             => await _context.SaveChangesAsync();
+
     }
 }
