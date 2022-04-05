@@ -11,7 +11,6 @@ namespace SISAPI.API.Areas.Admin.Controllers
     {
         private readonly SignInManager<AppUser> _signInManager;
 
-
         public HomeController(SignInManager<AppUser> signInManager)
         {
             _signInManager = signInManager;

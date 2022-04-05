@@ -20,7 +20,8 @@ namespace SISAPI.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPersistenceServices();
-            services.AddControllersWithViews();        
+            services.AddControllersWithViews();
+            services.AddSession();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env /*,UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager*/)
         {
@@ -38,6 +39,7 @@ namespace SISAPI.API
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();
