@@ -50,12 +50,6 @@ namespace SISAPI.API.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> StudentDetail(string id)
         {
-
-            Note note = await _noteRepository.GetSingleAsync(n => n.StudentNo == id && n.LessonId == 42 && n.Period == "2021-Bahar", true);
-
-            note.MakeUpExam2 = 61;
-            int changed = await _noteRepository.SaveAsync();
-
             StudentDetailModel model = await GetStudentDetailModel(id);
             SetSession("student_no", id);
             return View(model);
@@ -66,13 +60,29 @@ namespace SISAPI.API.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                foreach (string key in collection.Keys)
+                if (! collection.Keys.Contains("student.StudentNo")) // Öğrenci bilgilerini içermiyorsa (Not bilgilerini içerir)
                 {
-                    if (key!= "__RequestVerificationToken")
+                    foreach (string key in collection.Keys)
                     {
-                        await UpdateNote(key, collection[key]);
+                        if (key != "__RequestVerificationToken")
+                        {
+                            await UpdateNote(key, collection[key]);
+                        }
                     }
                 }
+                else // Sadece Öğrenci bilgilerini içerir (Not bilgilerini içermez)
+                {
+                    Student student = await _studentRepository.GetByIdAsync(model.student.StudentNo);
+                    student.Name = model.student.Name;
+                    student.Surname = model.student.Surname;
+                    student.Department = model.student.Department;
+                    student.Faculty = model.student.Faculty;
+                    student.GradeLevel = model.student.GradeLevel;
+                    student.AdvisorId = model.student.AdvisorId;
+                    await _studentRepository.SaveAsync();
+                }
+                
+                return RedirectToAction("StudentDetail", new { id = GetSession("student_no") });
             }
             else
             {
@@ -105,8 +115,9 @@ namespace SISAPI.API.Areas.Admin.Controllers
 
         private async Task<StudentDetailModel> GetStudentDetailModel(string id)
         {
+            
             Student student = await _studentRepository.GetByIdAsync(id, false);
-            IEnumerable<Note> notes = _noteRepository.GetWhere(n => n.Period == "2021-Bahar" && n.StudentNo == student.StudentNo, false);
+            IEnumerable<Note> notes = _noteRepository.GetWhere(n => n.Period == Program.Period && n.StudentNo == student.StudentNo, false);
             Academic academician = await _academicRepository.GetByIdAsync((short)student.AdvisorId, false);
             IEnumerable<Academic> academics = _academicRepository.GetWhere(a => a.Department == student.Department, false);
 
@@ -147,7 +158,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
 
             string student_no = GetSession("student_no");
 
-            Note note = await _noteRepository.GetSingleAsync(n => n.StudentNo == student_no && n.LessonId == lesson_id && n.Period == "2021-Bahar", true);
+            Note note = await _noteRepository.GetSingleAsync(n => n.StudentNo == student_no && n.LessonId == lesson_id && n.Period == Program.Period);
 
             if(note != null)
             {

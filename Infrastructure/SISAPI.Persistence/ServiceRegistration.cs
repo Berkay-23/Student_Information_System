@@ -18,7 +18,6 @@ namespace SISAPI.Persistence
             services.AddDbContext<SISContext>(options =>
             options.UseSqlServer(Configuration.ConnectionString), ServiceLifetime.Scoped);
 
-
             services.AddIdentity<AppUser, IdentityRole>(
                 opt =>
                 {

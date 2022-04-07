@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SISAPI.Persistence.Contexts;
 
 namespace SISAPI.Persistence.Migrations
 {
     [DbContext(typeof(SISContext))]
-    partial class SISContextModelSnapshot : ModelSnapshot
+    [Migration("20220405145621_mig-6")]
+    partial class mig6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -333,54 +335,6 @@ namespace SISAPI.Persistence.Migrations
                     b.HasKey("LessonId");
 
                     b.ToTable("Lessons");
-                });
-
-            modelBuilder.Entity("SISAPI.Domain.Entities.LessonDetails", b =>
-                {
-                    b.Property<short>("LessonId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<float?>("AA_startingGrade")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("BA_startingGrade")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("BB_startingGrade")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("CB_startingGrade")
-                        .HasColumnType("real");
-
-                    b.Property<float?>("CC_startingGrade")
-                        .HasColumnType("real");
-
-                    b.Property<bool>("Certainty_of_final")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Certainty_of_makeup1")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Certainty_of_makeup2")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Certainty_of_midterm")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Certainty_of_percentages")
-                        .HasColumnType("bit");
-
-                    b.Property<short>("FinalPercentage")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("MidtermPercentage")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("LessonId");
-
-                    b.ToTable("LessonDetails");
                 });
 
             modelBuilder.Entity("SISAPI.Domain.Entities.LessonInformation", b =>

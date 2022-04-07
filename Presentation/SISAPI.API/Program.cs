@@ -11,6 +11,7 @@ namespace SISAPI.API
 {
     public class Program
     {
+        public static string Period = "2021-Bahar";
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

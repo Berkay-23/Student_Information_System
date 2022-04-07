@@ -61,7 +61,7 @@ namespace SISAPI.Persistence.Contexts
 
             modelBuilder.Entity<Note>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.NoteId);
 
             });
 
@@ -90,5 +90,6 @@ namespace SISAPI.Persistence.Contexts
         public DbSet<Note> Notes { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<UnsuccessfulStudent> UnsuccessfulStudents { get; set; }
+        public DbSet<LessonDetails> LessonDetails { get; set; }
     }
 }

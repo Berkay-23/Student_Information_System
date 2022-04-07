@@ -4,43 +4,42 @@
     ViewData["Title"] = "StudentDetail";
     Layout = "_AdminMainLayout";
 }
-
 @if (Model.student != null)
 {
     <div class="container-fluid row mx-auto mt-5">
         <div id="studentInfos">
             <form asp-action="StudentDetail">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Öğrenci Numarası</label>
                     <input class="form-control" readonly asp-for="@Model.student.StudentNo" />
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Ad</label>
                     <input asp-for="@Model.student.Name" class="form-control" />
                     <span asp-validation-for="@Model.student.Name" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Soyad</label>
                     <input asp-for="@Model.student.Surname" class="form-control" />
                     <span asp-validation-for="@Model.student.Surname" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Fakülte</label>
                     <input asp-for="@Model.student.Faculty" class="form-control" />
                     <span asp-validation-for="@Model.student.Faculty" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Bölüm</label>
                     <input asp-for="@Model.student.Department" class="form-control" />
                     <span asp-validation-for="@Model.student.Department" class="text-danger"></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Sınıf</label>
                     <input asp-for="@Model.student.GradeLevel" class="form-control" />
                     <span asp-validation-for="@Model.student.GradeLevel" class="text-danger"></span>
                 </div>    
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label class="control-label">Danışman</label>
                     <select asp-for="@Model.student.AdvisorId" class="form-select" aria-label="Default select example">
                         @foreach (Academic academic in Model.academics)
@@ -58,7 +57,7 @@
                     </select>
                 </div>
                 <div class="d-grid form-group mt-3">
-                    <button class="btn btn-outline-primary" type="submit">Kaydet</button>
+                    <button class="btn btn-primary" type="submit">Güncelle</button>
                 </div>
             </form>
         </div>
@@ -90,7 +89,7 @@
                             @if (note.MidtermExam != null)
                             {
                                 <td>
-                                    <input class="form-control" name="mid-@note.LessonId" value="@note.MidtermExam"/>
+                                    <input autocomplete="off" class="form-control" name="mid-@note.LessonId" value="@note.MidtermExam"/>
                                 </td>
                             }
                             else
@@ -101,7 +100,7 @@
                             @if (note.MakeUpExam1 != null)
                             {
                                 <td>
-                                    <input class="form-control" name="mk1-@note.LessonId" value="@note.MakeUpExam1"/>
+                                    <input autocomplete="off" class="form-control" name="mk1-@note.LessonId" value="@note.MakeUpExam1"/>
                                 </td>
                             }
                             else
@@ -111,7 +110,7 @@
                             @if (note.FinalExam != null)
                             {
                                 <td>
-                                    <input class="form-control" name="fin-@note.LessonId" value="@note.FinalExam"/>
+                                    <input autocomplete="off" class="form-control" name="fin-@note.LessonId" value="@note.FinalExam"/>
                                 </td>
                             }
                             else
@@ -121,20 +120,20 @@
                             @if (note.MakeUpExam2 != null)
                             {
                                 <td>
-                                    <input class="form-control" name="mk2-@note.LessonId" value="@note.MakeUpExam2"/>
+                                    <input autocomplete="off" class="form-control" name="mk2-@note.LessonId" value="@note.MakeUpExam2"/>
                                 </td>
                             }
                             else
                             {
                                 <td></td>
                             }
-                            <th>@note.Average</th>
+                            <th name="avg-@note.LessonId">@note.Average</th>
                         </tr>
                         }
                     </tbody>
                 </table>
                 <div class="d-grid">
-                    <button class="btn btn-danger" asp-action="StudentDetail" type="submit">Gönder</button>
+                    <button class="btn btn-danger" asp-action="StudentDetail" type="submit">Notları Kaydet</button>
                 </div>
             </form>
         </div>

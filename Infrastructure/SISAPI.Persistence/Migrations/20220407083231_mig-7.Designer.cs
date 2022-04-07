@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SISAPI.Persistence.Contexts;
 
 namespace SISAPI.Persistence.Migrations
 {
     [DbContext(typeof(SISContext))]
-    partial class SISContextModelSnapshot : ModelSnapshot
+    [Migration("20220407083231_mig-7")]
+    partial class mig7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -342,19 +344,19 @@ namespace SISAPI.Persistence.Migrations
                         .HasColumnType("smallint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<float?>("AA_startingGrade")
+                    b.Property<float>("AA_startingGrade")
                         .HasColumnType("real");
 
-                    b.Property<float?>("BA_startingGrade")
+                    b.Property<float>("BA_startingGrade")
                         .HasColumnType("real");
 
-                    b.Property<float?>("BB_startingGrade")
+                    b.Property<float>("BB_startingGrade")
                         .HasColumnType("real");
 
-                    b.Property<float?>("CB_startingGrade")
+                    b.Property<float>("CB_startingGrade")
                         .HasColumnType("real");
 
-                    b.Property<float?>("CC_startingGrade")
+                    b.Property<float>("CC_startingGrade")
                         .HasColumnType("real");
 
                     b.Property<bool>("Certainty_of_final")

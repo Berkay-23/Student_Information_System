@@ -2236,6 +2236,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\SISAPI.Application\SISAPI.Application.csproj" />
+    <ProjectReference Include="..\..\Infastructure\SISAPI.Infastructure\SISAPI.Infastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\SISAPI.Persistence\SISAPI.Persistence.csproj" />
   </ItemGroup>
 
