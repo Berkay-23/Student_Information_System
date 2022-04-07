@@ -30,7 +30,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
 
             if (signInResult.Succeeded)
             {
-                return RedirectToAction("Index", "SisSettings", new { area = "Admin" });
+                return RedirectToAction("Index", "Main", new { area = "Admin" });
             }
             ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı");
             

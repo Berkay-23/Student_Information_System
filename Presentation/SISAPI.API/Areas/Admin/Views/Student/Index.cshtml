@@ -24,7 +24,7 @@
                 <tr id="#@student.StudentNo">
 
                     <th class="text-c" scope="row">
-                        <a asp-action="StudentDetail" asp-route-id="@student.StudentNo">
+                        <a asp-area="Admin" asp-action="Details" asp-route-id="@student.StudentNo">
                             @student.StudentNo
                         </a>
                     </th>
@@ -36,7 +36,7 @@
                     <td class="text-c">@student.GradeLevel</td>
 
                     <td class="text-c">
-                        <a class="text-decoration-none" asp-action="AcademicianDetail" asp-route-id="@student.AdvisorId">
+                        <a class="text-decoration-none" asp-area="Admin" asp-controller="Academic" asp-action="Detail" asp-route-id="@student.AdvisorId">
                             @student.AdvisorId
                         </a>
                     </td>
