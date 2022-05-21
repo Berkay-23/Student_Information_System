@@ -1,8 +1,69 @@
-﻿@{
+﻿@model IEnumerable<Lesson>
+
+@{
     Layout = "_AdminMainLayout";
 }
 
+<div id="lesson-search-area" class="search-area mt-3">
+    <a asp-area="Admin" asp-action="Create" class="btn btn-outline-primary">Yeni Ders Ekle</a>
+    <div class="input-group">
+        <input class="form-control search-input" type="search" placeholder="Ders Id">
+        <button class="btn btn-outline-success search-button" type="button">Ara</button>
+    </div>
+</div>
+
+ <div class="container mt-5">
+
+     <table class="table table-light table-hover">
+         <thead class="table-dark noselect">
+             <tr class="lh-50">
+                 @*<th class="text-c" scope="col">Ders Id</th>*@
+                 <th class="text-c" scope="col">Ders Kodu</th>
+                 <th scope="col">Ders Adı</th>
+                 <th class="text-c" scope="col">Ders Tipi</th>
+                 <th class="text-c" scope="col">AKTS</th>
+                 <th class="text-c" scope="col">Kredi</th>
+                 <th class="text-c" scope="col">Dönem</th>
+                 <th class="text-c" scope="col">Sınıf</th>
+                 <th class="text-c" scope="col">TDL</th>
+                 <th class="text-c" scope="col">PDL</th>
+                 <th class="text-c" scope="col">Eğitmen Id</th>
+             </tr>
+         </thead>
+         <tbody>
+             @foreach (Lesson lesson in Model)
+             {
+                 <tr id="@lesson.LessonId">
+                     <th class="text-c">
+                         <a asp-area="Admin" asp-action="Edit" asp-route-id="@lesson.LessonId">
+                             @lesson.LessonCode
+                         </a>
+                     </th>
+
+                     <td>@lesson.LessonName</td>
+                     <td class="text-c">@lesson.LessonType</td>
+                     <td class="text-c">@lesson.Ects</td>
+                     <td class="text-c">@lesson.Credit</td>
+                     <td class="text-c">@lesson.Semester</td>
+                     <td class="text-c">@lesson.GradeLevel</td>
+                     <td class="text-c">@lesson.TheoreticalLimit</td>
+                     <td class="text-c">@lesson.PraticalLimit</td>
+                     <td class="text-c">
+                         <a asp-area="Admin" asp-controller="Academic" asp-action="Detail">
+                             @lesson.LecturerId
+                         </a>
+                     </td>
+                     
+                 </tr>
+             }
+         </tbody>
+     </table>
+
+ </div>
+
+
+
 <script>
     let active_index = 4
+    var base = `${window.location.origin}/Admin/Lesson`;
 </script>
-

@@ -1,0 +1,77 @@
+﻿@model AnnotationsAcademicModel
+
+@{
+    ViewData["Title"] = $"Details | {Model.Mail}";
+    Layout = "_AdminMainLayout";
+}
+
+<div id="back-to-div">
+    <a asp-action="Index" class="btn btn-outline-dark m-4">Akademisyenler Listesine Geri Dön</a>
+</div>
+
+<div id="student-create-area" class="container">
+    <div>
+        <h3 class="text-center noselect">Akademisyen Bilgilerini Güncelle</h3>
+        <hr style="border: 3px solid #000;">
+    </div>
+    <form asp-action="Detail">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group mt-3">
+            <label class="control-label">Ders Id</label>
+            <input readonly value="@Model.AcademicianId" class="form-control" asp-for="AcademicianId" />
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Name" class="control-label">Ad</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Surname" class="control-label">Soyad</label>
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Mail" class="control-label">Mail</label>
+            <input asp-for="Mail" class="form-control" />
+            <span asp-validation-for="Mail" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Faculty" class="control-label">Fakülte</label>
+            <input asp-for="Faculty" type="text" class="form-control" />
+            <span asp-validation-for="Faculty" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Department" class="control-label">Bölüm</label>
+            <input asp-for="Department" type="text" class="form-control" />
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+
+        <div class="d-grid form-group mt-3 mb-3">
+            <button class="btn btn-primary">Kaydet</button>
+        </div>
+    </form>
+
+    <hr />
+
+    <form asp-area="Admin" asp-controller="Lesson" asp-action="Delete" method="get">
+        <div class="form-group mt-3">
+            <label class="control-label">Akademisyen Id</label>
+            <input readonly type="text" name="academic_id" class="form-control" value="@Model.AcademicianId" />
+        </div>
+
+        <div class="d-grid form-group mt-3">
+            <button asp-action="Delete" class="btn btn-danger">Kaydı Sil</button>
+        </div>
+
+    </form>
+</div>
+
+<br />
+<br />
+<br />
+
+
+<script>
+    let active_index = 3
+</script>

@@ -14,7 +14,7 @@ namespace SISAPI.Application.Repositories
         IQueryable<Lesson> GetAll(bool tracking = true);
         IQueryable<Lesson> GetWhere(Expression<Func<Lesson, bool>> method, bool tracking = true);
         Task<Lesson> GetSingleAsync(Expression<Func<Lesson, bool>> method, bool tracking = true);
-        Task<Lesson> GetByIdAsync(string id, bool tracking = true);
+        Task<Lesson> GetByIdAsync(short id, bool tracking = true);
 
 
         // Write Operations
@@ -23,7 +23,7 @@ namespace SISAPI.Application.Repositories
         Task<bool> AddRangeAsync(List<Lesson> entities);
         bool Remove(Lesson entity);
         bool RemoveRange(List<Lesson> entities);
-        Task<bool> RemoveAsync(string id);
+        Task<bool> RemoveAsync(int id);
         bool Update(Lesson entity);
         Task<int> SaveAsync();
     }

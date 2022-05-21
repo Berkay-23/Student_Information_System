@@ -35,14 +35,14 @@ namespace SISAPI.Persistence.Repositories
             return query;
         }
 
-        public async Task<Lesson> GetByIdAsync(string id, bool tracking = true)
+        public async Task<Lesson> GetByIdAsync(short id, bool tracking = true)
         {
             var query = Table.AsQueryable();
 
             if (!tracking)
                 query = query.AsNoTracking();
 
-            return await query.FirstOrDefaultAsync(entity => entity.LessonId == Int32.Parse(id));
+            return await query.FirstOrDefaultAsync(entity => entity.LessonId == id);
         }
 
         public async Task<Lesson> GetSingleAsync(Expression<Func<Lesson, bool>> method, bool tracking = true)
@@ -83,9 +83,9 @@ namespace SISAPI.Persistence.Repositories
             return entityEntry.State == EntityState.Deleted;
         }
 
-        public async Task<bool> RemoveAsync(string id)
+        public async Task<bool> RemoveAsync(int id)
         {
-            Lesson entity = await Table.FirstOrDefaultAsync(entity => entity.LessonId == Int32.Parse(id));
+            Lesson entity = await Table.FirstOrDefaultAsync(entity => entity.LessonId == id);
             return Remove(entity);
         }
 

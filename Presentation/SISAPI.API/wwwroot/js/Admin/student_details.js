@@ -74,3 +74,18 @@ notes.forEach(element => {
             avg_th[0].textContent = avg.toString().replace('.', ',')
     });
 });
+
+let search_btn = document.querySelector(".search-button");
+let search_input = document.querySelector(".search-input");
+
+search_btn.addEventListener('click', () => {
+    location.href = `${base}#${search_input.value}`;
+});
+
+search_input.addEventListener('keyup', function (event){
+
+    if (event.keyCode == 13) {
+        location.href = `${base}#${search_input.value}`;
+        event.preventDefault();
+    }
+});

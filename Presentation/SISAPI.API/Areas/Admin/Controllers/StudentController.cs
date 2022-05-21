@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SISAPI.API.Areas.Admin.Models;
 using SISAPI.Application.Repositories;
 using SISAPI.Domain.Entities;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -32,7 +32,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Detail(string id)
         {
             StudentDetailModel model = await GetStudentDetailModel(id);
             SetSession("student_no", id);
@@ -40,7 +40,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(StudentDetailModel model, IFormCollection collection)
+        public async Task<IActionResult> Detail(StudentDetailModel model, IFormCollection collection)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
                     await _studentRepository.SaveAsync();
                 }
 
-                return RedirectToAction("Details", new { id = GetSession("student_no") });
+                return RedirectToAction("Detail", new { id = GetSession("student_no") });
             }
             else
             {
@@ -80,6 +80,36 @@ namespace SISAPI.API.Areas.Admin.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new AnnotationsStudentModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(AnnotationsStudentModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _studentRepository.AddAsync(new Student() {
+                    StudentNo = model.StudentNo,
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    Faculty = model.Faculty,
+                    Department = model.Department,
+                    GradeLevel = model.GradeLevel,
+                    AdvisorId = model.AdvisorId
+                });
+                await _studentRepository.SaveAsync();
+                return Redirect($"Index#{model.StudentNo}");
+            }
+            return View(model);
+        }
+
+        public IActionResult Search(string number)
+        {
+            return RedirectToAction();
+        }
 
         private async Task<StudentDetailModel> GetStudentDetailModel(string id)
         {

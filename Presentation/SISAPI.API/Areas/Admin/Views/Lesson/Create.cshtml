@@ -1,0 +1,88 @@
+﻿@model AnnotationsLessonModel
+
+@{
+    Layout = "_AdminMainLayout";
+}
+
+<div id="back-to-div">
+    <a asp-action="Index" class="btn btn-outline-dark m-4">Dersler Listesine Geri Dön</a>
+</div>
+
+<div id="student-create-area" class="container">
+    <div>
+        <h3 class="text-center noselect">Yeni Ders Ekle</h3>
+        <hr style="border: 3px solid #000;">
+    </div>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group mt-3">
+            <label asp-for="LessonName" class="control-label">Ders Adı</label>
+            <input asp-for="LessonName" class="form-control" />
+            <span asp-validation-for="LessonName" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="LessonCode" class="control-label">Ders Kodu</label>
+            <input asp-for="LessonCode" class="form-control" />
+            <span asp-validation-for="LessonCode" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="LessonType" class="control-label">Ders Tipi</label>
+            <select asp-for="LessonType" class="form-control">
+                <option selected value="Seçmeli">Seçmeli</option>
+                <option value="Zorunlu">Zorunlu</option>
+            </select>
+
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Ects" class="control-label">AKTS</label>
+            <input asp-for="Ects" type="text" class="form-control" />
+            <span asp-validation-for="Ects" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Credit" class="control-label">Kredi</label>
+            <input asp-for="Credit" type="text" class="form-control" />
+            <span asp-validation-for="Credit" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Semester" class="control-label">Dönem</label>
+            <select asp-for="Semester" class="form-control">
+                <option selected value="Bahar">Bahar</option>
+                <option value="Güz">Güz</option>
+            </select>
+            <span asp-validation-for="Semester" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="GradeLevel" class="control-label">Sınıf</label>
+            <input asp-for="GradeLevel" type="text" class="form-control" />
+            <span asp-validation-for="GradeLevel" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="PraticalLimit" class="control-label">Pratik Devamsızlık Limiti</label>
+            <input asp-for="PraticalLimit" type="text" class="form-control" />
+            <span asp-validation-for="PraticalLimit" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="TheoreticalLimit" class="control-label">Teorik Devamsızlık Limiti</label>
+            <input asp-for="TheoreticalLimit" type="text" class="form-control" />
+            <span asp-validation-for="TheoreticalLimit" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="LecturerId" class="control-label">Eğitmen Id</label>
+            <input asp-for="LecturerId" type="text" class="form-control" />
+            <span asp-validation-for="LecturerId" class="text-danger"></span>
+        </div>
+        <div class="d-grid form-group mt-3">
+            <button class="btn btn-primary">Dersi Ekle</button>
+        </div>
+    </form>
+</div>
+
+<br />
+<br />
+<br />
+
+<script>
+    let active_index = 4
+</script>
+

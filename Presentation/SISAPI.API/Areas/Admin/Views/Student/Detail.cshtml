@@ -1,14 +1,14 @@
 ﻿@model StudentDetailModel
 
 @{
-    ViewData["Title"] = "StudentDetail";
     Layout = "_AdminMainLayout";
 }
+
 @if (Model.student != null)
 {
     <div class="container-fluid row mx-auto mt-5">
         <div id="studentInfos">
-            <form asp-area="Admin" asp-controller="Student" asp-action="Details">
+            <form asp-area="Admin" asp-controller="Student" asp-action="Detail">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group mt-3">
                     <label class="control-label">Öğrenci Numarası</label>
@@ -63,7 +63,7 @@
         </div>
 
         <div id="note-table-area">
-            <form asp-area="Admin" asp-controller="Student" asp-action="Details" method="post">
+            <form asp-area="Admin" asp-controller="Student" asp-action="Detail" method="post">
                 <table class="table table-light table-hover note-details">
                     <thead class="table-dark noselect">
                         <tr>
@@ -81,7 +81,7 @@
                             <tr id="#@note.LessonId">
 
                                 <th scope="row">
-                                    <a asp-action="Lessons" asp-route-id="@note.LessonId">
+                                    <a asp-area="Admin" asp-controller="Lesson" asp-action="Detail" asp-route-id="@note.LessonId">
                                         @note.LessonId
                                     </a>
                                 </th>
@@ -141,7 +141,7 @@
 }
 
 @*<div>
-    <a asp-area="Admin" asp-controller="Student" asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>*@
 
 <script>

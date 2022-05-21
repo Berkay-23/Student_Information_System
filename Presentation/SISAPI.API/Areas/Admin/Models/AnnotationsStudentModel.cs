@@ -4,6 +4,7 @@ namespace SISAPI.API.Areas.Admin.Models
 {
     public class AnnotationsStudentModel
     {
+        [Required(ErrorMessage = "Öğrenci no boş bırakılamaz")]
         public string StudentNo { get; set; }
 
         [Required(ErrorMessage = "Öğrenci adı boş bırakılamaz")]

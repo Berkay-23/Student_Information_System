@@ -1,7 +1,52 @@
-﻿@{
+﻿@model IEnumerable<Academic>
+
+@{
     Layout = "_AdminMainLayout";
 }
 
+<div id="student-search-area" class="search-area mt-3">
+    <a asp-area="Admin" asp-action="Create" class="btn btn-outline-primary">Yeni Akademisyen Ekle</a>
+    <div class="input-group">
+        <input class="form-control search-input" type="search" placeholder="Akademisyen Id">
+        <button class="btn btn-outline-success search-button" type="button">Ara</button>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <table class="table table-light table-hover">
+        <thead class="table-dark noselect">
+            <tr class="lh-50">
+                <th class="text-c" scope="col">Akademisyen Id</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Ad</th>
+                <th scope="col">Soyad</th>
+                <th scope="col">Fakülte</th>
+                <th scope="col">Bölüm</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Academic academic in Model)
+            {
+                <tr id="@academic.AcademicianId">
+
+                    <th class="text-c" scope="row">
+                        <a asp-area="Admin" asp-action="Detail" asp-route-id="@academic.AcademicianId">
+                            @academic.AcademicianId
+                        </a>
+                    </th>
+
+                    <td>@academic.Mail</td>
+                    <td>@academic.Name</td>
+                    <td>@academic.Surname</td>
+                    <td>@academic.Faculty.Substring(0, academic.Faculty.IndexOf("Fak") - 1)</td>
+                    <td>@academic.Department@*.Substring(0, academic.Faculty.IndexOf(" ") - 1)*@</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
 <script>
-        let active_index = 3;
+    let active_index = 3;
+    var base = `${window.location.origin}/Admin/Academic`;
 </script>

@@ -4,6 +4,13 @@
     Layout = "_AdminMainLayout";
 }
 
+<div id="student-search-area" class="search-area mt-3">
+    <a asp-area="Admin" asp-action="Create" class="btn btn-outline-primary">Yeni Öğrenci Ekle</a>
+    <div class="input-group">
+        <input class="form-control search-input" type="search" placeholder="Öğrenci No">
+        <button class="btn btn-outline-success search-button" type="button">Ara</button>
+    </div>
+</div>
 
 <div class="container mt-5">
     <table class="table table-light table-hover">
@@ -21,10 +28,10 @@
         <tbody>
             @foreach (Student student in Model)
             {
-                <tr id="#@student.StudentNo">
+                <tr id="@student.StudentNo">
 
                     <th class="text-c" scope="row">
-                        <a asp-area="Admin" asp-action="Details" asp-route-id="@student.StudentNo">
+                        <a asp-area="Admin" asp-action="Detail" asp-route-id="@student.StudentNo">
                             @student.StudentNo
                         </a>
                     </th>
@@ -46,6 +53,8 @@
     </table>
 </div>
 
+
 <script>
     let active_index = 2;
+    var base = `${window.location.origin}/Admin/Student`;
 </script>

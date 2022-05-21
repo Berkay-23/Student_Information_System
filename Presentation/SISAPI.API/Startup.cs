@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.Extensions.Localization;
 using SISAPI.Persistence;
 
 namespace SISAPI.API
@@ -22,6 +22,15 @@ namespace SISAPI.API
             services.AddPersistenceServices();
             services.AddControllersWithViews();
             services.AddSession();
+
+            services.AddRazorPages()
+               .AddMvcOptions(options =>
+               {
+                   options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(_ => "Bu alan boþ býrakýlamaz");
+                   options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(_ => "Bu alan sayý olmalýdýr. ");
+                   options.ModelBindingMessageProvider.SetValueIsInvalidAccessor((x) => "Geçersiz deðer girdiniz");
+                   options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor((x, y) => "Girdiðiniz deðer bu alan için geçerli deðil");
+               });
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env /*,UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager*/)
         {

@@ -1,0 +1,69 @@
+﻿@model AnnotationsAcademicModel
+
+@{
+    Layout = "_AdminMainLayout";
+}
+
+<div id="back-to-div">
+    <a asp-action="Index" class="btn btn-outline-dark m-4">Akademisyen Listesine Geri Dön</a>
+</div>
+
+<div id="student-create-area" class="container">
+    <div>
+        <h3 class="text-center noselect">Akademisyen Ekle</h3>
+        <hr style="border: 3px solid #000;">
+    </div>
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group mt-3">
+            <label asp-for="Mail" class="control-label">Mail</label>
+            <input asp-for="Mail" class="form-control" />
+            <span asp-validation-for="Mail" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Name" class="control-label">Ad</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Surname" class="control-label">Soyad</label>
+            <input asp-for="Surname" class="form-control" />
+            <span asp-validation-for="Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Faculty" class="control-label">Fakülte</label>
+            <select asp-for="Faculty" class="form-control">
+                <option value="Diş Hekimliği Fakültesi">Diş Hekimliği Fakültesi</option>
+                <option value="Eczacılık Fakültesi">Eczacılık Fakültesi</option>
+                <option value="Eğitim Fakültesi">Eğitim Fakültesi</option>
+                <option value="Fen Fakültesi">Fen Fakültesi</option>
+                <option value="İnsani ve Sosyal Bilimler Fakültesi">İnsani ve Sosyal Bilimler Fakültesi</option>
+                <option value="İkdisadi ve İdari Bilimler Fakültesi">İkdisadi ve İdari Bilimler Fakültesi</option>
+                <option value="İlahiyat Fakültesi">İlahiyat Fakültesi</option>
+                <option value="İletişim Fakültesi">İletişim Fakültesi</option>
+                <option value="Mimarlık Fakültesi">Mimarlık Fakültesi</option>
+                <option value="Mühendislik Fakültesi">Mühendislik Fakültesi</option>
+                <option value="Sağlık Bilimleri Fakültesi">Sağlık Bilimleri Fakültesi</option>
+                <option value="Su Ürünleri Fakültesi">Su Ürünleri Fakültesi</option>
+                <option value="Spor Fakültesi">Spor Fakültesi</option>
+                <option value="Teknoloji Fakültesi">Teknoloji Fakültesi</option>
+                <option value="Teknik Eğitim Fakültesi">Teknik Eğitim Fakültesi</option>
+                <option value="Tıp Fakültesi">Tıp Fakültesi</option>
+                <option value="Veteriner Fakültesi">Veteriner Fakültesi</option>
+            </select>
+            <span asp-validation-for="Faculty" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <label asp-for="Department" class="control-label">Bölüm</label>
+            <input asp-for="Department" class="form-control" />
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+        <div class="d-grid form-group mt-3">
+            <button class="btn btn-success" type="submit">Kayıt Oluştur</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    let active_index = 3
+</script>
