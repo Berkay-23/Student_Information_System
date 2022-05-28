@@ -5,6 +5,7 @@ using SISAPI.Domain.Entities;
 using System.Threading.Tasks;
 using SISAPI.API.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace SISAPI.API.Controllers
 {
@@ -27,7 +28,7 @@ namespace SISAPI.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> IndexAsync(UserModel user)
+        public async Task<IActionResult> Index(UserModel user)
         {
 
             if (ModelState.IsValid)
@@ -40,6 +41,7 @@ namespace SISAPI.API.Controllers
 
                         if (signInResult.Succeeded)
                         {
+                            HttpContext.Session.SetString("student_no", user.UserName);
                             return RedirectToAction("Index", "Students");
                         }
                         ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı");

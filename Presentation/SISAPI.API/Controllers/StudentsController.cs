@@ -1,155 +1,178 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using SISAPI.API.Business;
+using SISAPI.API.Models.StudentModels;
+using SISAPI.Application.Repositories;
+using SISAPI.Domain.Entities;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using SISAPI.Domain.Entities;
-using SISAPI.Persistence.Contexts;
 
 namespace SISAPI.API.Controllers
 {
     [Authorize(Roles = "Student")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
     public class StudentsController : Controller
     {
-        private readonly SISContext _context;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IAcademicRepository _academicRepository;
+        private readonly INoteRepository _noteRepository;
+        private readonly ILessonRepository _lessonRepository;
+        private readonly IGradeInformationRepository _gradeInformationRepository;
+        private readonly ILessonInformationRepository _lessonInformationRepository;
+        private StudentBusiness _business;
 
-        public StudentsController(SISContext context)
+        private static bool isLoggedIn { get; set; } = false;
+        private static string _student_no { get; set; }
+
+        public StudentsController(IStudentRepository studentRepository, IAcademicRepository academicRepository, INoteRepository noteRepository, IGradeInformationRepository gradeInformationRepository, ILessonRepository lessonRepository, ILessonInformationRepository lessonInformationRepository)
         {
-            _context = context;
+            _studentRepository = studentRepository;
+            _academicRepository = academicRepository;
+            _noteRepository = noteRepository;
+            _lessonRepository = lessonRepository;
+            _gradeInformationRepository = gradeInformationRepository;
+            _lessonInformationRepository = lessonInformationRepository;
+
+            _business = new StudentBusiness(_studentRepository, _academicRepository, _noteRepository, _gradeInformationRepository, _lessonRepository, _lessonInformationRepository);
         }
 
-        // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
-        }
+            _student_no = GetSession("student_no");
+            StudentMainModel model = await _business.GetStudentModelAsync(_student_no);
 
-        // GET: Students/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
+            if (model != null)
             {
-                return NotFound();
+                isLoggedIn = true;
+                
+                return View(model);
             }
-
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.StudentNo == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return View(student);
+            return RedirectToAction("Index", "Home");
         }
 
-        // GET: Students/Create
-        public IActionResult Create()
+        public IActionResult AcademicCalendar() // Akademik Takvim
         {
-            return View();
+            if (isLoggedIn)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
-        // POST: Students/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        public async Task<IActionResult> ConsultantInformation() // Danışman Bilgileri
+        {
+            if (isLoggedIn)
+            {
+                return View(await _business.GetStudentModelAsync(_student_no));
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ReceivedLessons() // Alınan  Dersler
+        {
+            if (isLoggedIn)
+            {
+                ReceivedLessonsModel model = await _business.GetLessonsAsync(0, _student_no);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StudentNo,Password,Name,Surname,Faculty,Department,GradeLevel,AdvisorId")] Student student)
+        public async Task<IActionResult> ReceivedLessons(int selected) // Alınan  Dersler
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(student);
+            ReceivedLessonsModel model = await _business.GetLessonsAsync(selected, _student_no);
+            return View(model);
         }
 
-        // GET: Students/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult ExamSchedule() // Sınav Takvimi
         {
-            if (id == null)
+            if (isLoggedIn)
             {
-                return NotFound();
+                return View();
             }
-
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-            return View(student);
+            return RedirectToAction("Index", "Home");
         }
 
-        // POST: Students/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        public IActionResult InternshipInformation() // Staj Bilgileri
+        {
+            if (isLoggedIn)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LessonEnrollment() // Ders Kaydı
+        {
+            if (isLoggedIn)
+            {
+                LessonEnrollmentModel model = await _business.GetLessonEnrollmentModelAsync(_student_no);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("StudentNo,Password,Name,Surname,Faculty,Department,GradeLevel,AdvisorId")] Student student)
+        public async Task<IActionResult> LessonEnrollment(IFormCollection collection) // Ders Kaydı
         {
-            if (id != student.StudentNo)
+            if (isLoggedIn)
             {
-                return NotFound();
+                return View(await _business.SetLessonEnrollmentAsync(collection, _student_no));
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(student);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!StudentExists(student.StudentNo))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(student);
+            return RedirectToAction("Index", "Home");
         }
 
-        // GET: Students/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        [HttpGet]
+        public async Task<IActionResult> NoteList() // Not Listesi
         {
-            if (id == null)
+            if (isLoggedIn)
             {
-                return NotFound();
+                NoteModel model = await _business.GetNoteModelAsync(0, _student_no);
+                return View(model);
             }
-
-            var student = await _context.Students
-                .FirstOrDefaultAsync(m => m.StudentNo == id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return View(student);
+            return RedirectToAction("Index", "Home");
         }
 
-        // POST: Students/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [HttpPost]
+        public async Task<IActionResult> NoteList(int selected) // Not Listesi
         {
-            var student = await _context.Students.FindAsync(id);
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            if (isLoggedIn)
+            {
+                NoteModel model = await _business.GetNoteModelAsync(selected, _student_no);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+
         }
 
-        private bool StudentExists(string id)
+        public async Task<IActionResult> TranscriptInformation() // Transkript Bilgisi
         {
-            return _context.Students.Any(e => e.StudentNo == id);
+            if (isLoggedIn)
+            {
+                return View(await _business.GetTranscriptInformationModelAsync(_student_no));
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AbsenceStatus() // Devamsızlık Durumu
+        {
+            if (isLoggedIn)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        private string GetSession(string key)
+        {
+            return HttpContext.Session.GetString(key);
         }
     }
 }

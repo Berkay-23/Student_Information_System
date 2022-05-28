@@ -18,12 +18,16 @@ namespace SISAPI.API.Areas.Admin.Controllers
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IAcademicRepository _academicRepository;
+        private readonly IFacultyRepository _facultyRepository;
         private readonly INoteRepository _noteRepository;
-        public StudentController(IStudentRepository studentRepository, IAcademicRepository academicRepository, INoteRepository noteRepository)
+        private IEnumerable<Faculty> Faculties { get; set; }
+        public StudentController(IStudentRepository studentRepository, IAcademicRepository academicRepository, INoteRepository noteRepository, IFacultyRepository facultyRepository)
         {
             _studentRepository = studentRepository;
             _academicRepository = academicRepository;
+            _facultyRepository = facultyRepository;
             _noteRepository = noteRepository;
+            Faculties = _facultyRepository.GetAll();
         }
         public IActionResult Index()
         {
@@ -36,6 +40,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
         {
             StudentDetailModel model = await GetStudentDetailModel(id);
             SetSession("student_no", id);
+            model.Faculties = Faculties;
             return View(model);
         }
 
@@ -75,15 +80,15 @@ namespace SISAPI.API.Areas.Admin.Controllers
                 model.notes = default_model.notes;
                 model.academics = default_model.academics;
                 model.academician = default_model.academician;
+                model.Faculties = Faculties;
             }
-
             return View(model);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new AnnotationsStudentModel());
+            return View(new AnnotationsStudentModel() { Faculties = Faculties });
         }
 
         [HttpPost]
@@ -103,6 +108,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
                 await _studentRepository.SaveAsync();
                 return Redirect($"Index#{model.StudentNo}");
             }
+            model.Faculties = Faculties;
             return View(model);
         }
 
@@ -115,8 +121,13 @@ namespace SISAPI.API.Areas.Admin.Controllers
         {
             Student student = await _studentRepository.GetByIdAsync(id, false);
             IEnumerable<Note> notes = _noteRepository.GetWhere(n => n.Period == Program.Period && n.StudentNo == student.StudentNo, false);
-            Academic academician = await _academicRepository.GetByIdAsync((short)student.AdvisorId, false);
             IEnumerable<Academic> academics = _academicRepository.GetWhere(a => a.Department == student.Department, false);
+            Academic academician = null;
+
+            if (student.AdvisorId != null)
+            {
+                academician = await _academicRepository.GetByIdAsync((short)student.AdvisorId, false);
+            }
 
             StudentDetailModel model = new StudentDetailModel()
             {
@@ -132,7 +143,8 @@ namespace SISAPI.API.Areas.Admin.Controllers
                 },
                 notes = notes,
                 academician = academician,
-                academics = academics
+                academics = academics,
+                Faculties = Faculties
             };
 
             return model;

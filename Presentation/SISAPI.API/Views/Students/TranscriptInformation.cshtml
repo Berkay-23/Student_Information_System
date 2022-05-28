@@ -1,0 +1,129 @@
+﻿@model TranscriptInformationModel
+
+@{
+    ViewData["Title"] = "Transkript Bilgisi";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+    int period_counter = 0;
+}
+
+
+@if (Model != null)
+{
+    <div class="d-flex justify-content-around flex-wrap">
+
+        @for (int i = 0; i < Model.Lessons.Count; i++)
+        {
+            <div class="my-3" style="max-width:600px; min-width:600px;">
+
+                @if (Model.Notes[i][0].Period.Contains("Güz"))
+                {
+                    <h4>@($"{period_counter + 1}. Yıl Güz Dönemi")</h4>
+                }
+
+                else
+                {
+                    <h4>@($"{period_counter}. Yıl Bahar Dönemi")</h4>
+                }
+
+                @if (i % 2 == 0) { period_counter++; }
+
+                <table class="table table-primary table-striped">
+
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">Ders Kodu</th>
+                            <th scope="col">Ders Adı</th>
+                            <th scope="col" class="text-center">AKTS</th>
+                            <th scope="col" class="text-center">Kredi</th>
+                            <th class="text-center" scope="col">Harf Notu</th>
+                            <th class="text-center" scope="col">Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int j = 0; j < Model.Lessons[i].Count; j++)
+                        {
+                            <tr>
+                                <td class="text-center" scope="col">@Model.Lessons[i][j].LessonCode</td>
+                                <td scope="col">@Model.Lessons[i][j].LessonName</td>
+                                <td scope="col" class="text-center">@Model.Lessons[i][j].Ects</td>
+                                <td scope="col" class="text-center">@Model.Lessons[i][j].Credit</td>
+
+                                @switch (Model.Notes[i][j].LetterScore)
+                                {
+                                    case 4:
+                                        <td class="text-center" scope="col">4.00</td>
+                                        break;
+
+                                    case 3.5:
+                                        <td class="text-center" scope="col">3.50</td>
+                                        break;
+
+                                    case 3:
+                                        <td class="text-center" scope="col">3.00</td>
+                                        break;
+
+                                    case 2.5:
+                                        <td class="text-center" scope="col">2.50</td>
+                                        break;
+
+                                    case 2:
+                                        <td class="text-center" scope="col">2.00</td>
+                                        break;
+
+                                    case 0:
+                                        <td class="text-center" scope="col">0.00</td>
+                                        break;
+                                }
+
+                                @switch (Model.Notes[i][j].Status)
+                                {
+                                    case true:
+                                        <td class="text-center" scope="col"><b>G</b></td>
+                                        break;
+
+                                    case false:
+                                        <td class="text-center text-danger" scope="col"><b>K</b></td>
+                                        break;
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <div class="container mt-3">
+
+            <table class="table table-light table-bordered border-primary w-50 m-auto">
+                <tr>
+                    <th>Adı Soyadı</th>
+                    <td>@($"{Model.StudentInfos.student.Name} {Model.StudentInfos.student.Surname}")</td>
+                </tr>
+                <tr>
+                    <th>Öğrenci No</th>
+                    <td>@(Model.StudentInfos.gradeInformation.StudentNo)</td>
+                </tr>
+                <tr>
+                    <th>Transkript Notu</th>
+                    <td>@(Model.StudentInfos.gradeInformation.TranscriptNote)</td>
+                </tr>
+                <tr>
+                    <th>Toplam AKTS</th>
+                    <td>@(Model.StudentInfos.gradeInformation.TotalEcts)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="w-100 p-3 noselect">
+        <h2>Transkript Bilgisi</h2>
+        <hr />
+        <p>
+            <b class="text-danger">Henüz transkript bilginiz bulunmamaktadır.</b>
+        </p>
+
+    </div>
+}
+

@@ -1,0 +1,82 @@
+﻿@model ReceivedLessonsModel
+
+@{
+    ViewData["Title"] = "";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="receivedLessons">
+
+
+    @if (Model.Periods != null)
+    {
+        <form asp-action="ReceivedLessons" method="post">
+            <select onchange="this.form.submit()" class="form-select" id="periodSelect" name="selected">
+
+                @for (int i = 0; i < Model.Periods.Count; i++)
+                {
+                    if (Model.SelectedPeriod == i)
+                    {
+                        <option selected value="@(i)">@(Model.Periods[i])</option>
+                    }
+                    else
+                    {
+                        <option value="@(i)">@(Model.Periods[i])</option>
+                    }
+                }
+
+            </select>
+        </form>
+
+        <br />
+        <hr />
+
+
+        <table class="table table-dark table-hover text-center">
+
+            <thead>
+                <tr>
+                    <th scope="col">Ders Kodu</th>
+                    <th scope="col">Ders Adı</th>
+                    <th scope="col">Ders Tipi</th>
+                    <th scope="col">Kredi</th>
+                    <th scope="col">AKTS</th>
+                    <th scope="col">Sınıf</th>
+                    <th scope="col">Teo Dev</th>
+                    <th scope="col">Prtk Dev</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var lesson in Model.Lessons)
+                {
+                    <tr>
+                        <td scope="row">@lesson.LessonId</td>
+                        <td scope="row">@lesson.LessonName</td>
+                        <td scope="row">@lesson.LessonType</td>
+                        <td scope="row">@lesson.Credit</td>
+                        <td scope="row">@lesson.Ects</td>
+                        <td scope="row">@lesson.GradeLevel</td>
+                        <td scope="row">@lesson.TheoreticalLimit</td>
+                        <td scope="row">@lesson.PraticalLimit</td>
+                    </tr>
+                }
+
+            </tbody>
+            <caption class="noselect text-center">
+                <b>Teo Dev</b> → Teorik Devamsızlık (Saat) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Prtk Dev</b> → Pratik Devamsızlık(Saat)
+            </caption>
+
+        </table>
+    }
+    else
+    {
+        <div class="w-100 p-3 noselect">
+            <h2>Ders kaydı</h2>
+            <hr />
+            <p><b class="text-danger">Henüz ders kayıt hakkınız bulunmamaktadır.</b></p>
+        </div>
+
+    }
+</div>

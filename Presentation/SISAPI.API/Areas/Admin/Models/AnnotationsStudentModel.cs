@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SISAPI.Domain.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SISAPI.API.Areas.Admin.Models
 {
@@ -23,5 +25,6 @@ namespace SISAPI.API.Areas.Admin.Models
         [Range(1, 6, ErrorMessage = "Sınıf alanı {1} ve {2} aralığında olmalı.")]
         public byte GradeLevel { get; set; }
         public short? AdvisorId { get; set; }
+        public IEnumerable<Faculty> Faculties { get; set; }
     }
 }

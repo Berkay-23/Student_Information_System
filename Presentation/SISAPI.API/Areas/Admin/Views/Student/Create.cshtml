@@ -33,7 +33,12 @@
         </div>
         <div class="form-group mt-3">
             <label asp-for="Faculty" class="control-label">Fakülte</label>
-            <input asp-for="Faculty" class="form-control" />
+            <select asp-for="Faculty" class="form-control">
+                @foreach (Faculty faculty in Model.Faculties)
+                {
+                    <option value="@faculty.Name">@faculty.Name</option>
+                }
+            </select>
             <span asp-validation-for="Faculty" class="text-danger"></span>
         </div>
         <div class="form-group mt-3">

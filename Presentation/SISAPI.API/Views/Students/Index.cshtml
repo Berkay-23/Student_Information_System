@@ -1,66 +1,42 @@
-﻿@model IEnumerable<SISAPI.Domain.Entities.Student>
+﻿@model StudentMainModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container pos-relaive">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Faculty)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Department)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GradeLevel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AdvisorId)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Faculty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Department)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GradeLevel)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdvisorId)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.StudentNo">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.StudentNo">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.StudentNo">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="cards">
+        <div class="card text-white bg-dark mb-3 col-3">
+            <div class="card-header text-center"><h5>Öğrenim Bilgileri</h5></div>
+            <div class="card-body text-center">
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.student.Faculty) <br>
+                    @Html.DisplayFor(model => model.student.Department) <br>
+                    @Html.DisplayFor(model => model.student.GradeLevel). Sınıf
+                </p>
+            </div>
+        </div>
+
+        <div class="card text-white bg-dark mb-3 col-3">
+            <div class="card-header text-center"><h5>Danışman Bilgileri</h5></div>
+            <div class="card-body text-center">
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.advisor.Name)
+                    @Html.DisplayFor(model => model.advisor.Surname) <br>
+                    @Html.DisplayFor(model => model.advisor.Mail)@("@firat.edu.tr")
+                </p>
+            </div>
+        </div>
+
+        <div class="card text-white bg-dark mb-3 col-3">
+            <div class="card-header text-center"><h5>Transkript Bilgileri</h5></div>
+            <div class="card-body text-center d-grid">
+                <p class="card-text">AGNO : @Html.DisplayFor(model => model.gradeInformation.TranscriptNote)</p>
+                <a asp-action="TranscriptInformation" class="btn btn-primary">İncele</a>
+            </div>
+        </div>
+    </div>
+
+</div>

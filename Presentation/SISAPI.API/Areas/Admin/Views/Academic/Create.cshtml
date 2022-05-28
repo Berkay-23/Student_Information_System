@@ -33,23 +33,10 @@
         <div class="form-group mt-3">
             <label asp-for="Faculty" class="control-label">Fakülte</label>
             <select asp-for="Faculty" class="form-control">
-                <option value="Diş Hekimliği Fakültesi">Diş Hekimliği Fakültesi</option>
-                <option value="Eczacılık Fakültesi">Eczacılık Fakültesi</option>
-                <option value="Eğitim Fakültesi">Eğitim Fakültesi</option>
-                <option value="Fen Fakültesi">Fen Fakültesi</option>
-                <option value="İnsani ve Sosyal Bilimler Fakültesi">İnsani ve Sosyal Bilimler Fakültesi</option>
-                <option value="İkdisadi ve İdari Bilimler Fakültesi">İkdisadi ve İdari Bilimler Fakültesi</option>
-                <option value="İlahiyat Fakültesi">İlahiyat Fakültesi</option>
-                <option value="İletişim Fakültesi">İletişim Fakültesi</option>
-                <option value="Mimarlık Fakültesi">Mimarlık Fakültesi</option>
-                <option value="Mühendislik Fakültesi">Mühendislik Fakültesi</option>
-                <option value="Sağlık Bilimleri Fakültesi">Sağlık Bilimleri Fakültesi</option>
-                <option value="Su Ürünleri Fakültesi">Su Ürünleri Fakültesi</option>
-                <option value="Spor Fakültesi">Spor Fakültesi</option>
-                <option value="Teknoloji Fakültesi">Teknoloji Fakültesi</option>
-                <option value="Teknik Eğitim Fakültesi">Teknik Eğitim Fakültesi</option>
-                <option value="Tıp Fakültesi">Tıp Fakültesi</option>
-                <option value="Veteriner Fakültesi">Veteriner Fakültesi</option>
+                @foreach (Faculty faculty in Model.Faculties)
+                {
+                    <option value="@faculty.Name">@faculty.Name</option>
+                }
             </select>
             <span asp-validation-for="Faculty" class="text-danger"></span>
         </div>

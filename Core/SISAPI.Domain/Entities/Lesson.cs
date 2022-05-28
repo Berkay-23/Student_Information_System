@@ -20,6 +20,7 @@ namespace SISAPI.Domain.Entities
         public byte PraticalLimit { get; set; }
         public byte TheoreticalLimit { get; set; }
         public short? LecturerId { get; set; }
+        public string Department { get; set; }
 
     }   
 }

@@ -39,7 +39,7 @@
                     <td>@student.Name</td>
                     <td>@student.Surname</td>
                     <td>@student.Faculty.Substring(0, student.Faculty.IndexOf("Fak") - 1)</td>
-                    <td>@student.Department.Substring(0, student.Faculty.IndexOf(" ") - 1)</td>
+                    <td>@student.Department@*.Substring(0, student.Faculty.IndexOf(" ") - 1)*@</td>
                     <td class="text-c">@student.GradeLevel</td>
 
                     <td class="text-c">

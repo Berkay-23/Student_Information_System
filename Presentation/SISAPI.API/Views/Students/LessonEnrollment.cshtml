@@ -1,0 +1,162 @@
+﻿@model LessonEnrollmentModel
+
+@{
+    ViewData["Title"] = "Ders Kaydı";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="container w-100">
+
+    @if (Model != null)
+    {
+        if (Model.FailedCount != -99)
+        {
+            <form asp-action="LessonEnrollment" method="post" class="w-100">
+                <div class="container">
+                    <table class="table table-dark table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Ders Kodu</th>
+                                <th>Ders Adı</th>
+                                <th class="text-center">Ders Türü</th>
+                                <th class="text-center">AKTS</th>
+                                <th class="text-center">Kredi</th>
+                                <th>Öğretim Üyesi</th>
+                                <th class="text-center">Dersi ekle</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < Model.Lessons.Count; i++)
+                            {
+                                if (i < Model.FailedCount)
+                                {
+                                    <tr>
+                                        <td class="text-center bg-danger">@Model.Lessons[i].LessonCode</td>
+                                        <td class="bg-danger">@Model.Lessons[i].LessonName</td>
+                                        <td class="text-center bg-danger">@Model.Lessons[i].LessonType</td>
+                                        <td class="text-center bg-danger">@Model.Lessons[i].Ects</td>
+                                        <td class="text-center bg-danger">@Model.Lessons[i].Credit</td>
+
+                                        @if (Model.Academics[i] != null)
+                                        {
+                                            <td class="bg-danger">@($"{Model.Academics[i].Name} {Model.Academics[i].Surname}")</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="bg-danger"></td>
+                                        }
+
+                                        <td class="text-center bg-danger">
+                                            <input type="checkbox" value="@(Model.Lessons[i].LessonId)" id="check-@(Model.Lessons[i].LessonId)" name="check-@(Model.Lessons[i].LessonId)">
+                                            <label for="check-@(Model.Lessons[i].LessonId)"><i class="fa-regular fa-square-plus fa-2xl"></i></label>
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="text-center">@Model.Lessons[i].LessonCode</td>
+                                        <td>@Model.Lessons[i].LessonName</td>
+                                        <td class="text-center">@Model.Lessons[i].LessonType</td>
+                                        <td class="text-center">@Model.Lessons[i].Ects</td>
+                                        <td class="text-center">@Model.Lessons[i].Credit</td>
+
+                                        @if (Model.Academics[i] != null)
+                                        {
+                                            <td>@($"{Model.Academics[i].Name} {Model.Academics[i].Surname}")</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        <td class="text-center">
+                                            <input type="checkbox" value="@(Model.Lessons[i].LessonId)" id="check-@(Model.Lessons[i].LessonId)" name="check-@(Model.Lessons[i].LessonId)">
+                                            <label for="check-@(Model.Lessons[i].LessonId)"><i class="fa-regular fa-square-plus fa-2xl"></i></label>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="container area-lessons">
+                </div>
+
+                <div class="submit-area container mt-3 noselect">
+
+                    <div class="alert text-white" role="alert">
+                        Toplam AKTS : <b id="ects">0</b>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary col-3 float-end" type="submit">Kesinleştir</button>
+                    </div>
+
+                </div>
+            </form>
+        }
+        else
+        {
+            <div class="container">
+                <table class="table table-dark table-borderless">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Ders Kodu</th>
+                            <th>Ders Adı</th>
+                            <th class="text-center">Ders Türü</th>
+                            <th class="text-center">AKTS</th>
+                            <th class="text-center">Kredi</th>
+                            <th>Öğretim Üyesi</th>
+                            <th class="text-center">Onay Durumu</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @for (int i = 0; i < Model.Lessons.Count; i++)
+                        {
+                            <tr>
+                                <td class="text-center">@Model.Lessons[i].LessonCode</td>
+                                <td>@Model.Lessons[i].LessonName</td>
+                                <td class="text-center">@Model.Lessons[i].LessonType</td>
+                                <td class="text-center">@Model.Lessons[i].Ects</td>
+                                <td class="text-center">@Model.Lessons[i].Credit</td>
+
+                                @if (Model.Academics[i] != null)
+                                {
+                                    <td>@($"{Model.Academics[i].Name} {Model.Academics[i].Surname}")</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @switch (Model.Registration_Confirmation)
+                                {
+                                    case true:
+                                        <td class="text-center"><b>Onaylandı</b></td>
+                                        break;
+
+                                    default:
+                                        <td class="text-center"><b>Beklemede</b></td>
+                                        break;
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <h2>Ders Kaydı</h2>
+        <hr />
+
+        <p>
+            <b class="text-danger">Ders kaydı mevcut değildir.</b>
+        </p>
+        <hr />
+    }
+</div>
+

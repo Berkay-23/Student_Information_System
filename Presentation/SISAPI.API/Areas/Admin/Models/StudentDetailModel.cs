@@ -9,6 +9,7 @@ namespace SISAPI.API.Areas.Admin.Models
         public AnnotationsStudentModel student { get; set; }
         public Academic academician { get; set; }
         public IEnumerable<Note> notes { get; set; }
-        public IEnumerable<Academic> academics { get; set; }
+        public IEnumerable<Academic> academics { get; set; }   
+        public IEnumerable<Faculty> Faculties { get; set; }
     }
 }

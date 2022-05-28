@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SISAPI.Domain.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SISAPI.API.Areas.Admin.Models
 {
@@ -20,5 +22,6 @@ namespace SISAPI.API.Areas.Admin.Models
 
         [Required(ErrorMessage = "Bölüm alanı boş bırakılamaz")]
         public string Department { get; set; }
+        public IEnumerable<Faculty> Faculties { get; set; }
     }
 }

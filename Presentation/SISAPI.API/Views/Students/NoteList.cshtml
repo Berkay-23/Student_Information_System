@@ -1,0 +1,133 @@
+﻿@model NoteModel
+@{
+    ViewData["Title"] = "Not Listesi";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+<div class="noteList">
+
+    <form asp-action="NoteList" method="post">
+        <select onchange="this.form.submit()" class="form-select" id="periodSelectNote" name="selected">
+
+            @for (int i = 0; i < Model.Periods.Count; i++)
+            {
+                if (Model.SelectedPeriod == i)
+                {
+                    <option selected value="@(i)">@Model.Periods[i]</option>
+                }
+                else
+                {
+                    <option value="@(i)">@Model.Periods[i]</option>
+                }
+            }
+
+        </select>
+    </form>
+    <br />
+    <hr />
+
+    @if (Model.Periods != null)
+    {
+
+        <table class="table table-dark table-striped text-center">
+
+            <thead>
+                <tr>
+                    <th scope="col">Ders Kodu</th>
+                    <th scope="col">Ders Adı</th>
+                    <th scope="col">Vize Notu</th>
+                    <th scope="col">Mazeret Notu</th>
+                    <th scope="col">Final Notu</th>
+                    <th scope="col">Bütünleme Notu</th>
+                    <th scope="col">Ortalama</th>
+                    <th scope="col">Harf Notu</th>
+                    <th scope="col">Durum</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for (int i = 0; i < Model.Lessons.Count; i++)
+                {
+                    <tr>
+                        <td scope="row">@Model.Lessons[i].LessonCode</td>
+                        <td scope="row">@Model.Lessons[i].LessonName</td>
+                        <td scope="row">@Model.Notes[i].MidtermExam</td>
+
+                        @if (Model.Notes[i].MakeUpExam1 == null)
+                        {
+                            <td scope="row">-</td>
+                        }
+                        else
+                        {
+                            <td scope="row">@Model.Notes[i].MakeUpExam1</td>
+                        }
+                        <td scope="row">@Model.Notes[i].FinalExam</td>
+
+                        @if (Model.Notes[i].MakeUpExam2 == null)
+                        {
+                            <td scope="row">-</td>
+                        }
+                        else
+                        {
+                            <td scope="row">@Model.Notes[i].MakeUpExam2</td>
+                        }
+
+                        <td scope="row">@Model.Notes[i].Average</td>
+
+                        @switch (Model.Notes[i].LetterScore)
+                        {
+                            case 4:
+                                <td scope="row">AA</td>
+                                break;
+
+                            case 3.5:
+                                <td scope="row">BA</td>
+                                break;
+
+                            case 3:
+                                <td scope="row">BB</td>
+                                break;
+
+                            case 2.5:
+                                <td scope="row">CB</td>
+                                break;
+
+                            case 2:
+                                <td scope="row">CC</td>
+                                break;
+
+                            case 0:
+                                <td scope="row">FF</td>
+                                break;
+                        }
+
+                        @switch (Model.Notes[i].Status)
+                        {
+                            case true:
+                                <td scope="row">Geçti</td>
+                                break;
+
+                            case false:
+                                <td scope="row">Kaldı</td>
+                                break;
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="w-100 p-3 noselect">
+            <h2>Not Bilgisi</h2>
+            <hr />
+
+            <p>
+                <b class="text-danger">Henüz not girişi yapılmamıştır.</b>
+            </p>
+            <hr />
+        </div>
+
+    }
+</div>

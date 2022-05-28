@@ -26,7 +26,12 @@
                 </div>
                 <div class="form-group mt-3">
                     <label class="control-label">Fakülte</label>
-                    <input asp-for="@Model.student.Faculty" class="form-control" />
+                    <select asp-for="@Model.student.Faculty" class="form-control">
+                        @foreach (Faculty faculty in Model.Faculties)
+                        {
+                            <option value="@faculty.Name">@faculty.Name</option>
+                        }
+                    </select>
                     <span asp-validation-for="@Model.student.Faculty" class="text-danger"></span>
                 </div>
                 <div class="form-group mt-3">
@@ -41,20 +46,27 @@
                 </div>
                 <div class="form-group mt-3">
                     <label class="control-label">Danışman</label>
-                    <select asp-for="@Model.student.AdvisorId" class="form-select" aria-label="Default select example">
-                        @foreach (Academic academic in Model.academics)
-                        {
-                            @if (academic.AcademicianId == Model.academician.AcademicianId)
+                    @if (Model.academician != null)
+                    {
+                        <select asp-for="@Model.student.AdvisorId" class="form-select" aria-label="Default select example">
+                            @foreach (Academic academic in Model.academics)
                             {
-                                <option value="@academic.AcademicianId" selected>@(Model.academician.Name + " " +  Model.academician.Surname)</option>
+                                if (academic.AcademicianId == Model.academician.AcademicianId)
+                                {
+                                    <option value="@academic.AcademicianId" selected>@(Model.academician.Name + " " +  Model.academician.Surname)</option>
+                                }
+                                else
+                                {
+                                    <option value="@academic.AcademicianId">@(academic.Name + " " + academic.Surname)</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@academic.AcademicianId">@(academic.Name + " " + academic.Surname)</option>
-                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.student.AdvisorId" class="form-control"/>
+                    }
 
-                        }
-                    </select>
                 </div>
                 <div class="d-grid form-group mt-3">
                     <button class="btn btn-primary" type="submit">Güncelle</button>

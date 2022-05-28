@@ -1,0 +1,35 @@
+﻿@model StudentMainModel
+@{
+    ViewData["Title"] = "Danışman Bilgileri";
+    Layout = "~/Views/Shared/_StudentLayout.cshtml";
+}
+
+@if (Model != null)
+{
+    <div class="consultantInformation">
+
+        <div class="header noselect"><h2>Danışman Bilgileri</h2></div>
+
+        <div class="card text-white mb-3 text-center">
+            <div class="card-header">
+                Danışman Bilgileri
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@($"{Model.advisor.Name} {Model.advisor.Surname}")</h5>
+                <p class="card-text">@($"{Model.advisor.Mail}@firat.edu.tr")</p>
+                <a href="mailto:@($"{Model.advisor.Mail}@firat.edu.tr")" class="btn btn-light d-grid">Danışmanla iletişime geç</a>
+            </div>
+        </div>
+    </div>
+}
+
+else
+{
+    <div class="w-100 p-3 noselect">
+        <h2>Danışman Bilgileri</h2>
+        <hr />
+        <p>
+            <b class="text-danger">Danışman bilgileri mevcut değildir.</b>
+        </p>
+    </div>
+}

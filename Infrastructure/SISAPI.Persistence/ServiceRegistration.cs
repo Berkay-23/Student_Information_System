@@ -42,6 +42,9 @@ namespace SISAPI.Persistence
             services.AddScoped<IAcademicRepository, AcademicRepository>();
             services.AddScoped<ILessonRepository, LessonRepository>();
             services.AddScoped<INoteRepository, NoteRepository>();
+            services.AddScoped<IFacultyRepository, FacultyRepository>();
+            services.AddScoped<IGradeInformationRepository, GradeInformationRepository>();
+            services.AddScoped<ILessonInformationRepository, LessonInformationRepository>();
         }
     }
 }

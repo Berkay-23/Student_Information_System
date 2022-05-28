@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SISAPI.API.Areas.Admin.Models;
 using SISAPI.Application.Repositories;
 using SISAPI.Domain.Entities;
-using SISAPI.Persistence.Repositories;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SISAPI.API.Areas.Admin.Controllers
@@ -14,10 +14,14 @@ namespace SISAPI.API.Areas.Admin.Controllers
     public class AcademicController : Controller
     {
         private readonly IAcademicRepository _academicRepository;
+        private readonly IFacultyRepository _facultyRepository;
+        private IEnumerable<Faculty> Faculties { get; set; }
 
-        public AcademicController(IAcademicRepository academicRepository)
+        public AcademicController(IAcademicRepository academicRepository, IFacultyRepository facultyRepository)
         {
             _academicRepository = academicRepository;
+            _facultyRepository = facultyRepository;
+            Faculties = _facultyRepository.GetAll();
         }
 
         public IActionResult Index()
@@ -28,7 +32,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View(new AnnotationsAcademicModel());
+            return View(new AnnotationsAcademicModel(){ Faculties = Faculties });
         }
 
         [HttpPost]
@@ -52,6 +56,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
             }
             else
             {
+                model.Faculties = Faculties;
                 return View(model);
             }
         }
@@ -68,7 +73,8 @@ namespace SISAPI.API.Areas.Admin.Controllers
                 Name = academic.Name,
                 Surname = academic.Surname,
                 Faculty = academic.Faculty,
-                Department = academic.Department
+                Department = academic.Department,
+                Faculties = Faculties
             };
 
             return View(model);
@@ -88,6 +94,7 @@ namespace SISAPI.API.Areas.Admin.Controllers
                 await _academicRepository.SaveAsync();
 
             }
+            model.Faculties = Faculties;
             return View(model);
         }
 
@@ -97,5 +104,6 @@ namespace SISAPI.API.Areas.Admin.Controllers
             await _academicRepository.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
+
     }
 }

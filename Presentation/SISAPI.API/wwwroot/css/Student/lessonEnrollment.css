@@ -1,0 +1,38 @@
+input[id^='check'], input[id^='dcheck'] {
+    display: none;
+}
+
+label[for^='check']:hover {
+    animation-name: hover_check;
+    animation-duration: 1s;
+}
+
+@keyframes hover_check {
+    50% {
+        transform: rotate(180deg);
+    }
+}
+
+.area-lessons{
+    background-color: #212529;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+div[class^='lesson']{
+    width: 420px;
+    padding: 0;
+    margin: 5px;
+}
+div[class^='lesson'] > .list-group{
+    padding: 0;
+    margin: 0;
+    min-width: 420px;    
+}
+
+div[class^='lesson'] .list-group-item{
+    padding: 8px 5px 8px 5px;
+    text-align: center;
+}
+
