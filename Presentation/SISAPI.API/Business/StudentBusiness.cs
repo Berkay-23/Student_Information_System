@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
+using System.Linq;
+using System;
 
 namespace SISAPI.API.Business
 {
@@ -228,38 +230,5 @@ namespace SISAPI.API.Business
 
             return await GetLessonEnrollmentModelAsync(student_no);
         }
-        public async Task UpdateRetakeFailCoursesAsync()
-        {
-            IEnumerable<LessonInformation> infos_base = _lessonInformationRepository.GetAll(false);
-            List<LessonInformation> infos = new List<LessonInformation>();
-
-            foreach (LessonInformation info in infos_base)
-                infos.Add(info);
-
-            List<string> lesson_ids = new List<string>();
-
-            foreach (LessonInformation info in infos)
-            {
-                IEnumerable<Note> notes = _noteRepository.GetWhere(s => s.StudentNo == info.StudentNo && s.Status == false, false);
-
-                string failed = string.Empty;
-                foreach (Note note in notes)
-                {
-                    failed = string.Concat(failed, $"{note.LessonId} ");
-                }
-                lesson_ids.Add(failed);
-            }
-
-            for (int i = 0; i < infos.Count; i++)
-                infos[i].RetakeFailCourses = lesson_ids[i];
-
-
-            foreach (LessonInformation lesson in infos)
-            {
-                _lessonInformationRepository.Update(lesson);
-                await _lessonInformationRepository.SaveAsync();
-            }
-        }
-
     }
 }

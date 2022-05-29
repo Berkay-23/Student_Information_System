@@ -1,0 +1,75 @@
+﻿@model Academic
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "_AcademicLayout";
+}
+
+<div class="card text-center noselect  w-25 mx-auto my-3">
+    <div class="card-header">
+        <h4>Hoşgeldiniz</h4>
+    </div>
+
+    <div class="card-body">
+        <h5 class="card-title">@($"{Model.Name} {Model.Surname}")</h5>
+    </div>
+
+    <div class="card-footer ">
+        @($"{Model.Mail}@firat.edu.tr")
+    </div>
+</div>
+
+<div class="card-area">
+
+    <a asp-action="Notes">
+        <div class="card">
+            <div class="card-header"><h5>Notlar</h5></div>
+            <div class="card-body">
+
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-3"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-3"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-5"></span>
+                </p>
+            </div>
+        </div>
+    </a>
+
+    <a asp-action="Absences">
+        <div class="card">
+            <div class="card-header"><h5>Devamsılıklar</h5></div>
+            <div class="card-body">
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-7"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-8"></span>
+                </p>
+            </div>
+        </div>
+    </a>
+
+    <a asp-action="LessonEnrollment">
+        <div class="card">
+            <div class="card-header"><h5>Ders Kayıtları</h5></div>
+            <div class="card-body">
+                <p class="card-text placeholder-glow">
+                    <span class="placeholder col-1"></span>
+                    <span class="placeholder col-2"></span>
+                    <span class="placeholder col-3"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-6"></span>
+                    <span class="placeholder col-2"></span>
+                    <span class="placeholder col-4"></span>
+                    <span class="placeholder col-2"></span>
+                </p>
+            </div>
+        </div>
+    </a>
+</div>

@@ -19,7 +19,8 @@ notes.forEach(element => {
 
         if (value > 100) {
             element.value = 100 // Girilen not 100'den yüksekse 100'e çeviriyor
-        } else if (value < 0) {
+        }
+        else if (value < 0) {
             element.value = 0 // Girilen not 0'dan azsa 0'a çeviriyor
         }
     });

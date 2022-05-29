@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using SISAPI.API.Models;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using SISAPI.Persistence.Contexts;
 
 namespace SISAPI.API.Controllers
 {
@@ -14,6 +15,7 @@ namespace SISAPI.API.Controllers
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger<HomeController> _logger;
+        private readonly SISContext _context;
 
         public HomeController(ILogger<HomeController> logger, SignInManager<AppUser> signInManager)
         {
@@ -22,8 +24,9 @@ namespace SISAPI.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _signInManager.SignOutAsync();
             return View(new UserModel());
         }
 
@@ -37,9 +40,9 @@ namespace SISAPI.API.Controllers
                 {
                     case "student":
 
-                        var signInResult = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
+                        var signInResultSt = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
 
-                        if (signInResult.Succeeded)
+                        if (signInResultSt.Succeeded)
                         {
                             HttpContext.Session.SetString("student_no", user.UserName);
                             return RedirectToAction("Index", "Students");
@@ -50,11 +53,15 @@ namespace SISAPI.API.Controllers
 
                     case "academician":
 
-                        break;
+                        var signInResultAc = await _signInManager.PasswordSignInAsync(user.UserName, user.Password, true, false);
 
-                    default:
+                        if (signInResultAc.Succeeded)
+                        {
+                            HttpContext.Session.SetString("academician_mail", user.UserName);
+                            return RedirectToAction("Index", "Academics");
+                        }
+                        ModelState.AddModelError("", "Kullanıcı Adı veya Şifre Hatalı");
                         break;
-
                 }
             }
             return View(user);

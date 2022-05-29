@@ -1,0 +1,128 @@
+﻿@model NotesModel
+
+@{
+    ViewData["Title"] = "Notlar";
+    Layout = "_AcademicLayout";
+}
+
+<div class="p-3">
+    <form asp-action="Notes" method="post" class="m-3">
+        <select onchange="this.form.submit()" class="form-select" name="lesson_id">
+
+            @if (Model.Selected_lesson == null)
+            {
+                <option selected>Lütfen Ders Seçiniz</option>
+            }
+
+            @for (int i = 0; i < Model.Lessons.Count; i++)
+            {
+                if (Model.Lessons[i].LessonId == Model.Selected_lesson)
+                {
+                    <option selected value="@Model.Lessons[i].LessonId">@Model.Lessons[i].LessonName</option>
+                }
+                else
+                {
+                    <option value="@Model.Lessons[i].LessonId">@Model.Lessons[i].LessonName</option>
+                }
+            }
+
+        </select>
+
+        <div id="note-list" class="p-2">
+            @if (Model.Notes == null && Model.Selected_lesson == null)
+            {
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item fw-bold">Öğrenci No</li>
+                    <li class="list-group-item fw-bold">Adı Soyadı</li>
+                    <li class="list-group-item fw-bold">Vize</li>
+                    <li class="list-group-item fw-bold">Mazeret</li>
+                    <li class="list-group-item fw-bold">Final</li>
+                    <li class="list-group-item fw-bold">Bütünleme</li>
+                    <li class="list-group-item fw-bold">Ortalama</li>
+                </ul>
+                for (int i = 0; i < 5; i++)
+                {
+                    Random rnd = new Random();
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><span class="placeholder col-8"></span></li>
+                        <li class="list-group-item"><span class="placeholder col-@rnd.Next(8, 12)"></span></li>
+                        <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                        <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                        <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                        <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                        <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                    </ul>
+                }
+
+
+            }
+            else
+            {
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item fw-bold">Öğrenci No</li>
+                    <li class="list-group-item fw-bold">Adı Soyadı</li>
+                    <li class="list-group-item fw-bold">Vize</li>
+                    <li class="list-group-item fw-bold">Mazeret</li>
+                    <li class="list-group-item fw-bold">Final</li>
+                    <li class="list-group-item fw-bold">Bütünleme</li>
+                    <li class="list-group-item fw-bold">Ortalama</li>
+                </ul>
+
+                if (Model.Notes.Count > 0)
+                {
+                    for (int i = 0; i < Model.Notes.Count; i++)
+                    {
+                        <ul id="@Model.Notes[i].StudentNo" class="list-group list-group-horizontal">
+
+                            <li class="list-group-item fw-bold">
+                                @Model.Notes[i].StudentNo
+                            </li>
+
+                            <li class="list-group-item">@Model.Student_names[i]</li>
+
+                            <li class="list-group-item">
+                                <input class="form-control" type="text" name="mid-@Model.Notes[i].StudentNo" value="@Model.Notes[i].MidtermExam" />
+                            </li>
+                            <li class="list-group-item">
+                                <input class="form-control" type="text" name="mk1-@Model.Notes[i].StudentNo" value="@Model.Notes[i].MakeUpExam1" />
+                            </li>
+
+                            <li class="list-group-item">
+                                <input class="form-control" type="text" name="fin-@Model.Notes[i].StudentNo" value="@Model.Notes[i].FinalExam" />
+                            </li>
+
+                            <li class="list-group-item">
+                                <input class="form-control" type="text" name="mk2-@Model.Notes[i].StudentNo" value="@Model.Notes[i].MakeUpExam2" />
+                            </li>
+
+                            <li class="list-group-item fw-bold">
+                                @Model.Notes[i].Average
+                            </li>
+                        </ul>
+                    }
+                    <div class="float-end col-4 mt-3">
+                        <button asp-action="Notes" type="submit" class="btn btn-warning col-12">Sonuçları Kaydet</button>
+                    </div>
+                }
+                else
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Random rnd = new Random();
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item"><span class="placeholder col-8"></span></li>
+                            <li class="list-group-item"><span class="placeholder col-@rnd.Next(8, 12)"></span></li>
+                            <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                            <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                            <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                            <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                            <li class="list-group-item"><span class="placeholder col-@rnd.Next(3, 5)"></span></li>
+                        </ul>
+                    }
+                }
+            }
+        </div>
+    </form>
+</div>
+
+

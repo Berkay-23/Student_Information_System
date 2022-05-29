@@ -49,7 +49,7 @@
                      <td class="text-c">@lesson.TheoreticalLimit</td>
                      <td class="text-c">@lesson.PraticalLimit</td>
                      <td class="text-c">
-                         <a asp-area="Admin" asp-controller="Academic" asp-action="Detail">
+                         <a asp-area="Admin" asp-controller="Academic" asp-action="Detail" asp-route-id="@lesson.LecturerId">
                              @lesson.LecturerId
                          </a>
                      </td>
