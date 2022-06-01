@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -13,28 +13,43 @@
     user-select: none;
 }
 
-header{
+header {
     display: flex;
     align-items: center;
+    justify-content:space-between;
     background-color: #cc0000;
     padding: 10px;
 }
 
-header a{
+header > div {
+    display: flex;
+    align-items: center;
+}
+
+header > div a {
     color: #fff;
     text-decoration: none;
     margin: 0 10px 0 10px;
 }
 
-header > h1{
+header h1 {
     margin: 0;
 }
 
-.header-text :hover{
-   color: #fff;
-   text-shadow: 2px 2px 8px #000;
+.header-text :hover {
+    color: #fff;
+    text-shadow: 2px 2px 8px #000;
 }
 
-header > a > img {
+header > div img {
     width: 64px;
+}
+
+header > a {
+    margin: 15px;
+    color: #fff;
+}
+
+header > a:hover {
+    color: #2c13bc
 }

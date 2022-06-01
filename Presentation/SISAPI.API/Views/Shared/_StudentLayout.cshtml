@@ -29,13 +29,17 @@
 </head>
 <body>
     <header>
-        <div id="header">
+        <div>
             <a asp-action="Index">
                 <img src="~/logo.png">
             </a>
 
-            <a asp-action="Index" class="navbar-brand noselect"> <b>Student</b> Information System</a>
+            <h1><a asp-action="Index" class="header-text noselect"><span><b>Student</b> Information System</span></a></h1>
         </div>
+
+        <a title="Çıkış Yap" asp-action="Logout">
+            <i class="fa-solid fa-power-off fa-xl"></i>
+        </a>
     </header>
 
     <main>

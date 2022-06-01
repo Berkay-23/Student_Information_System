@@ -105,6 +105,11 @@ namespace SISAPI.API.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Logout()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
         private string GetSession(string key)
         {
             return HttpContext.Session.GetString(key);
